@@ -1,2285 +1,990 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelas Kami — Struktur & Info</title>
-<link rel="icon" type="image/png"https://files.catbox.moe/cv370d.jpg">
-<style>
-  /* ===== RESET & BASE ===== */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4f0e6" />
+  <meta name="color-scheme" content="light" />
+  <title>LUTLOAD — Video Downloader</title>
+ <link rel="icon" type="image/png" href="https://files.catbox.moe/xkbayt.jpg">
+  <meta name="description" content="Web Tools Download VIDEO FREE 100%" />
 
-  :root {
-    --bg: #0d0a1f;
-    --bg-deep: #07050f;
-    --card: #1a1433;
-    --card-2: #130e28;
-    --text: #ece6ff;
-    --text-soft: #9a8fbf;
-    --accent: #a06cff;
-    --accent-dark: #7e4fd6;
-    --accent-soft: rgba(160, 108, 255, 0.14);
-    --border: rgba(160, 108, 255, 0.24);
-    --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-    --radius: 12px;
-    --danger: #ff6b8a;
-    --danger-soft: rgba(255, 107, 138, 0.12);
-    --warn: #ffc466;
-    --warn-soft: rgba(255, 196, 102, 0.12);
-    --success: #6ee0a8;
-    --success-soft: rgba(110, 224, 168, 0.12);
-    --star: #e0d4ff;
-    --nebula: #e07bd6;
-    --teal: #5fd9c4;
-    --ig: #e07bd6;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background:
-      radial-gradient(ellipse at 25% 0%, rgba(160, 108, 255, 0.14), transparent 55%),
-      radial-gradient(ellipse at 80% 12%, rgba(224, 123, 214, 0.10), transparent 50%),
-      radial-gradient(ellipse at 50% 100%, rgba(95, 217, 196, 0.08), transparent 55%),
-      linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
-    background-attachment: fixed;
-    color: var(--text);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background-image:
-      radial-gradient(1px 1px at 20px 30px, var(--star), transparent),
-      radial-gradient(1.5px 1.5px at 130px 90px, var(--star), transparent),
-      radial-gradient(1px 1px at 220px 40px, #ffffff, transparent),
-      radial-gradient(1.5px 1.5px at 320px 170px, var(--star), transparent),
-      radial-gradient(1px 1px at 400px 70px, #ffffff, transparent),
-      radial-gradient(1.5px 1.5px at 500px 210px, var(--star), transparent),
-      radial-gradient(1px 1px at 580px 110px, #ffffff, transparent),
-      radial-gradient(1.5px 1.5px at 680px 270px, var(--star), transparent),
-      radial-gradient(1px 1px at 90px 200px, var(--nebula), transparent),
-      radial-gradient(1.5px 1.5px at 460px 130px, var(--teal), transparent);
-    background-size: 720px 300px;
-    background-repeat: repeat;
-    opacity: 0.5;
-    animation: twinkle 5s ease-in-out infinite alternate;
-  }
-
-  @keyframes twinkle {
-    0%   { opacity: 0.35; }
-    100% { opacity: 0.6; }
-  }
-
-  nav, section, footer { position: relative; z-index: 1; }
-
-  /* ===== NAVBAR ===== */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(13, 10, 31, 0.9);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .logo {
-    font-weight: 700;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 0.02em;
-  }
-
-  .logo-dot {
-    width: 9px; height: 9px;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-soft);
-    border-radius: 2px;
-  }
-
-  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--text-soft);
-    font-size: 13.5px;
-    font-weight: 500;
-    padding: 7px 14px;
-    border-radius: 8px;
-    transition: color 0.2s, background 0.2s;
-    border: 1px solid transparent;
-  }
-
-  .nav-links a:hover,
-  .nav-links a.active {
-    color: #fff;
-    background: var(--accent-soft);
-    border-color: var(--border);
-  }
-
-  /* ===== PAGE SYSTEM ===== */
-  .page {
-    display: none;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 44px 20px 80px;
-  }
-
-  .page.active {
-    display: block;
-    animation: fadeUp 0.5s ease-out both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ===== PAGE HEAD ===== */
-  .page-head { margin-bottom: 38px; }
-
-  .eyebrow {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--nebula);
-    background: rgba(224, 123, 214, 0.1);
-    border: 1px solid rgba(224, 123, 214, 0.28);
-    padding: 5px 12px;
-    border-radius: 6px;
-    margin-bottom: 14px;
-  }
-
-  .page-head h1 {
-    font-size: clamp(26px, 5vw, 38px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin-bottom: 10px;
-    background: linear-gradient(120deg, #ffffff 0%, #c9b3ff 50%, #f0b3e8 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .page-head p {
-    color: var(--text-soft);
-    font-size: 15px;
-    max-width: 560px;
-  }
-
-  /* ===== CARD ===== */
-  .card {
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px;
-    box-shadow: var(--shadow);
-    transition: transform 0.22s ease, border-color 0.22s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), var(--nebula), transparent);
-    opacity: 0.5;
-  }
-
-  @media (hover: hover) {
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
+  <style>
+    :root{
+      --bg:#f4f0e6;
+      --paper:#fffdf7;
+      --ink:#101010;
+      --yellow:#ffe44d;
+      --pink:#ff6b9c;
+      --cyan:#61e7e0;
+      --purple:#a67cff;
+      --green:#a8ef67;
+      --red:#ff6b57;
+      --shadow:7px 7px 0 var(--ink);
+      --border:3px solid var(--ink);
+      --radius:18px;
     }
-  }
 
-  .card h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; color: #fff; }
-  .card p { color: var(--text-soft); font-size: 14px; }
-
-  /* ===== GRID ===== */
-  .grid { display: grid; gap: 16px; }
-  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-
-  /* ===== STAGGER / DELAY ===== */
-  .reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    animation: fadeUp 0.5s ease-out forwards;
-  }
-  .d1 { animation-delay: 0.06s; }
-  .d2 { animation-delay: 0.12s; }
-  .d3 { animation-delay: 0.18s; }
-  .d4 { animation-delay: 0.24s; }
-  .d5 { animation-delay: 0.30s; }
-  .d6 { animation-delay: 0.36s; }
-
-  /* ===== BUTTON ===== */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 11px 20px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), #c08bff);
-    color: #fff;
-  }
-  .btn-primary:hover {
-    background: linear-gradient(135deg, var(--accent-dark), #a76ef0);
-  }
-  .btn-primary:active { transform: scale(0.97); }
-
-  .btn-ghost {
-    background: rgba(160, 108, 255, 0.06);
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .btn-ghost:hover {
-    border-color: var(--accent);
-    color: #fff;
-    background: var(--accent-soft);
-  }
-  .btn-ghost:active { transform: scale(0.97); }
-
-  .btn-ig {
-    background: linear-gradient(135deg, #e07bd6, #a06cff);
-    color: #fff;
-    width: 100%;
-    justify-content: center;
-  }
-  .btn-ig:hover {
-    background: linear-gradient(135deg, #c963c0, #8a55e0);
-  }
-  .btn-ig:active { transform: scale(0.97); }
-
-  .btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    transform: none !important;
-  }
-
-  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
-
-  /* ===== STAT ===== */
-  .stat {
-    text-align: center;
-    padding: 26px 16px;
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-
-  .stat .num {
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: #c9b3ff;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .stat .lbl { font-size: 13.5px; color: var(--text-soft); }
-
-  /* ========================================================
-     STRUKTUR BAGAN / FLOWCHART
-     ======================================================== */
-  .chart-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0 20px;
-  }
-
-  .chart-node {
-    width: 100%;
-    max-width: 460px;
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    box-shadow: var(--shadow);
-    transition: border-color 0.22s ease, transform 0.22s ease;
-    position: relative;
-  }
-
-  .chart-node.clickable { cursor: pointer; }
-
-  @media (hover: hover) {
-    .chart-node.clickable:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(166,124,255,.16), transparent 18%),
+        radial-gradient(circle at 85% 20%, rgba(97,231,224,.17), transparent 17%),
+        var(--bg);
+      color:var(--ink);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      overflow-x:hidden;
     }
-  }
 
-  .chart-node.top {
-    border-color: var(--nebula);
-    background: linear-gradient(160deg, rgba(224, 123, 214, 0.14), var(--card-2));
-  }
+    button,input{font:inherit}
+    a{color:inherit}
 
-  .chart-num {
-    width: 34px; height: 34px;
-    border-radius: 8px;
-    background: var(--accent-soft);
-    border: 1px solid var(--border);
-    color: #c9b3ff;
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-
-  .chart-node.top .chart-num {
-    background: rgba(224, 123, 214, 0.18);
-    border-color: rgba(224, 123, 214, 0.4);
-    color: #f0b3e8;
-  }
-
-  .chart-info h3 {
-    font-size: 15.5px;
-    font-weight: 600;
-    color: #fff;
-    line-height: 1.3;
-  }
-
-  .chart-info p {
-    font-size: 13px;
-    color: var(--text-soft);
-    line-height: 1.5;
-  }
-
-  /* Garis penghubung vertikal */
-  .chart-line {
-    width: 2px;
-    height: 28px;
-    background: linear-gradient(180deg, var(--accent), var(--nebula));
-    opacity: 0.6;
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  .chart-line::before,
-  .chart-line::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 7px;
-    height: 7px;
-    background: var(--accent);
-    opacity: 0.8;
-  }
-
-  .chart-line::before { top: -1px; }
-  .chart-line::after  { bottom: -1px; }
-
-  /* ===== MEMBER CARD ===== */
-  .member {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 10px;
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    transition: border-color 0.2s ease, background 0.2s ease;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: var(--shadow);
-  }
-
-  .member:hover {
-    border-color: var(--accent);
-    background: linear-gradient(160deg, rgba(160, 108, 255, 0.14), rgba(224, 123, 214, 0.06));
-  }
-
-  .member:active { transform: scale(0.99); }
-
-  .avatar {
-    width: 46px; height: 46px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: var(--accent-soft);
-    border: 2px solid var(--card);
-    box-shadow: 0 0 0 1px var(--border);
-  }
-
-  .member-info h4 { font-size: 14.5px; font-weight: 600; line-height: 1.3; color: #fff; }
-  .member-info span { font-size: 12.5px; color: var(--text-soft); }
-
-  /* ===== INFO CARDS ===== */
-  .info-card {
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: border-color 0.22s ease, transform 0.22s ease;
-    box-shadow: var(--shadow);
-  }
-
-  @media (hover: hover) {
-    .info-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
+    .page{
+      width:min(1180px, calc(100% - 28px));
+      margin:0 auto;
+      padding:24px 0 50px;
     }
-  }
 
-  .info-thumb {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    background: var(--accent-soft);
-    display: block;
-    filter: saturate(0.9) brightness(0.85) hue-rotate(250deg);
-    opacity: 0.85;
-  }
-
-  .info-thumb-empty {
-    width: 100%;
-    height: 120px;
-    background: linear-gradient(135deg, rgba(160, 108, 255, 0.18), rgba(224, 123, 214, 0.1));
-    display: grid;
-    place-items: center;
-    font-size: 34px;
-    color: #c9b3ff;
-  }
-
-  .info-body {
-    padding: 22px 22px 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .info-body h3 {
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
-    color: #fff;
-  }
-
-  .info-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .info-list li {
-    font-size: 14px;
-    color: var(--text-soft);
-    line-height: 1.7;
-    padding-left: 16px;
-    position: relative;
-  }
-
-  .info-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 11px;
-    width: 5px; height: 5px;
-    background: var(--accent);
-    opacity: 0.85;
-  }
-
-  .info-list li strong { color: var(--text); font-weight: 600; }
-
-  .info-actions { margin-top: auto; }
-
-  /* ===== ABSURD PAGE ===== */
-  .absurd-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  @media (min-width: 720px) {
-    .absurd-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  .absurd-card {
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.22s ease, border-color 0.22s ease;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-
-  @media (hover: hover) {
-    .absurd-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:24px;
     }
-  }
 
-  .absurd-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--nebula), var(--accent), transparent);
-    opacity: 0.55;
-  }
-
-  .absurd-thumb {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-    display: block;
-    background: var(--accent-soft);
-    filter: saturate(0.9) brightness(0.8) hue-rotate(250deg);
-    opacity: 0.85;
-  }
-
-  .absurd-thumb-empty {
-    width: 100%;
-    height: 130px;
-    background: linear-gradient(135deg, rgba(160, 108, 255, 0.2), rgba(224, 123, 214, 0.12));
-    display: grid;
-    place-items: center;
-    font-size: 46px;
-    color: #c9b3ff;
-  }
-
-  .absurd-body {
-    padding: 20px 22px 22px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .absurd-tag {
-    display: inline-block;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--nebula);
-    background: rgba(224, 123, 214, 0.1);
-    border: 1px solid rgba(224, 123, 214, 0.28);
-    padding: 4px 10px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    align-self: flex-start;
-  }
-
-  .absurd-body h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-    line-height: 1.35;
-  }
-
-  .absurd-body p {
-    font-size: 14px;
-    color: var(--text-soft);
-    line-height: 1.75;
-    margin-bottom: 14px;
-  }
-
-  .absurd-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12.5px;
-    color: var(--text-soft);
-    margin-top: auto;
-    padding-top: 14px;
-    border-top: 1px dashed var(--border);
-  }
-
-  .absurd-meta .dot {
-    width: 5px; height: 5px;
-    background: var(--accent);
-    opacity: 0.7;
-    flex-shrink: 0;
-  }
-
-  /* ===== FORM REPORT ===== */
-  .report-wrap {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  @media (min-width: 860px) {
-    .report-wrap { grid-template-columns: 1.6fr 1fr; }
-  }
-
-  .form-card {
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 26px;
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .form-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), var(--nebula), transparent);
-    opacity: 0.55;
-  }
-
-  .form-group { margin-bottom: 20px; }
-
-  .form-label {
-    display: block;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-
-  .form-label .req { color: var(--nebula); margin-left: 3px; }
-
-  .form-hint {
-    display: block;
-    font-size: 12px;
-    color: var(--text-soft);
-    font-weight: 400;
-    margin-top: 3px;
-  }
-
-  .form-input,
-  .form-select,
-  .form-textarea {
-    width: 100%;
-    font-family: inherit;
-    font-size: 14px;
-    color: var(--text);
-    background: rgba(7, 5, 15, 0.7);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    transition: border-color 0.2s ease, background 0.2s ease;
-    line-height: 1.5;
-  }
-
-  .form-input::placeholder,
-  .form-textarea::placeholder { color: #6b6088; }
-
-  .form-input:focus,
-  .form-select:focus,
-  .form-textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(19, 14, 40, 0.95);
-  }
-
-  .form-textarea { resize: vertical; min-height: 130px; }
-
-  .form-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a8fbf' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 38px;
-    cursor: pointer;
-  }
-
-  .form-select option {
-    background: #130e28;
-    color: var(--text);
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  @media (min-width: 560px) {
-    .form-row { grid-template-columns: 1fr 1fr; }
-  }
-
-  .char-counter {
-    text-align: right;
-    font-size: 12px;
-    color: var(--text-soft);
-    margin-top: 6px;
-  }
-
-  .char-counter.warn { color: var(--warn); }
-  .char-counter.danger { color: var(--danger); }
-
-  .radio-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .radio-item { position: relative; cursor: pointer; }
-
-  .radio-item input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .radio-item .radio-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 12px 8px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    background: rgba(7, 5, 15, 0.7);
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
-    transition: all 0.2s ease;
-  }
-
-  .radio-item .radio-box .emoji { font-size: 18px; }
-
-  .radio-item input:checked + .radio-box {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-    color: #fff;
-  }
-
-  .radio-item input:focus-visible + .radio-box {
-    border-color: var(--accent);
-  }
-
-  .form-status {
-    display: none;
-    padding: 14px 16px;
-    border-radius: 10px;
-    font-size: 13.5px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-  }
-
-  .form-status.show { display: block; animation: fadeUp 0.3s ease-out; }
-
-  .form-status.info    { background: var(--accent-soft);  color: #c9b3ff; border-color: rgba(160, 108, 255, 0.4); }
-  .form-status.success { background: var(--success-soft); color: var(--success); border-color: rgba(110, 224, 168, 0.4); }
-  .form-status.error   { background: var(--danger-soft);  color: var(--danger);  border-color: rgba(255, 107, 138, 0.4); }
-  .form-status.warn    { background: var(--warn-soft);    color: var(--warn);    border-color: rgba(255, 196, 102, 0.4); }
-
-  .form-status strong { display: block; margin-bottom: 3px; }
-
-  .spinner {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: -2px;
-    margin-right: 6px;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .side-card {
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-  }
-
-  .side-card h4 {
-    font-size: 14.5px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #fff;
-  }
-
-  .side-card p,
-  .side-card li {
-    font-size: 13px;
-    color: var(--text-soft);
-    line-height: 1.75;
-  }
-
-  .side-card ol,
-  .side-card ul {
-    padding-left: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .side-card .badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 6px;
-    background: var(--accent-soft);
-    border: 1px solid var(--border);
-    color: #c9b3ff;
-    margin-bottom: 10px;
-  }
-
-  /* ===== MODAL / POPUP ===== */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(7, 5, 15, 0.78);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.22s ease, visibility 0.22s ease;
-    z-index: 1000;
-    overflow-y: auto;
-  }
-
-  .modal-overlay.show { opacity: 1; visibility: visible; }
-
-  .modal {
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 22px;
-    max-width: 460px;
-    width: 100%;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
-    transform: scale(0.92);
-    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .modal-overlay.show .modal { transform: scale(1); }
-
-  .modal-photo {
-    width: calc(100% + 44px);
-    margin: -24px -22px 18px;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-    border-radius: 16px 16px 0 0;
-    background: var(--accent-soft);
-    filter: saturate(0.9) brightness(0.85) hue-rotate(250deg);
-  }
-
-  .modal-icon {
-    width: 46px; height: 46px;
-    border-radius: 10px;
-    background: var(--accent-soft);
-    border: 1px solid var(--border);
-    color: #c9b3ff;
-    display: grid;
-    place-items: center;
-    font-size: 22px;
-    margin-bottom: 16px;
-  }
-
-  .modal h3 {
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-    color: #fff;
-  }
-
-  .modal p {
-    color: var(--text-soft);
-    font-size: 14.5px;
-    line-height: 1.75;
-    margin-bottom: 22px;
-  }
-
-  /* ===== WELCOME POPUP ===== */
-  .welcome-box {
-    text-align: center;
-  }
-
-  .welcome-icon {
-    width: 68px; height: 68px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgba(224, 123, 214, 0.2), rgba(160, 108, 255, 0.2));
-    border: 1px solid var(--border);
-    display: grid;
-    place-items: center;
-    font-size: 32px;
-    margin: 0 auto 18px;
-    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
-  }
-
-  @keyframes popIn {
-    0%   { transform: scale(0); opacity: 0; }
-    60%  { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  .welcome-box h3 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 10px;
-    letter-spacing: -0.02em;
-  }
-
-  .welcome-box p {
-    color: var(--text-soft);
-    font-size: 14.5px;
-    line-height: 1.75;
-    margin-bottom: 22px;
-  }
-
-  .welcome-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .welcome-actions .btn {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .sched-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 24px;
-  }
-
-  .sched-item {
-    padding: 14px 16px;
-    background: rgba(7, 5, 15, 0.6);
-    border-radius: 10px;
-    border-left: 3px solid var(--accent);
-  }
-
-  .sched-item .day {
-    font-size: 13px;
-    font-weight: 700;
-    color: #c9b3ff;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 6px;
-  }
-
-  .sched-item .subjects { font-size: 14px; color: var(--text); line-height: 1.75; }
-  .sched-item .time { font-size: 12.5px; color: var(--text-soft); margin-top: 6px; }
-
-  .achieve-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .achieve-item {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 14px;
-    background: rgba(7, 5, 15, 0.6);
-    border-radius: 10px;
-    border: 1px solid rgba(160, 108, 255, 0.12);
-  }
-
-  .achieve-item img {
-    width: 60px; height: 60px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: var(--accent-soft);
-    filter: saturate(0.9) brightness(0.9) hue-rotate(250deg);
-  }
-
-  .achieve-item .info h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; line-height: 1.4; color: #fff; }
-  .achieve-item .info p { font-size: 13px; color: var(--text-soft); margin: 0; line-height: 1.6; }
-
-  .medal {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #ffd98a;
-    background: rgba(255, 217, 138, 0.1);
-    border: 1px solid rgba(255, 217, 138, 0.25);
-    padding: 2px 8px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-  }
-
-  .profile-head {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .profile-photo {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: var(--accent-soft);
-    flex-shrink: 0;
-    box-shadow: 0 0 0 3px var(--accent-soft);
-  }
-
-  .profile-head h3 { font-size: 18px; margin-bottom: 2px; color: #fff; }
-  .profile-head .role { font-size: 13px; color: #c9b3ff; font-weight: 600; }
-
-  .profile-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
-
-  .profile-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 11px 14px;
-    background: rgba(7, 5, 15, 0.6);
-    border: 1px solid rgba(160, 108, 255, 0.1);
-    border-radius: 8px;
-    font-size: 13.5px;
-    line-height: 1.6;
-  }
-
-  .profile-item .label { color: var(--text-soft); flex-shrink: 0; }
-  .profile-item .value { font-weight: 600; text-align: right; color: var(--text); }
-
-  .profile-bio {
-    font-size: 13.5px;
-    color: var(--text-soft);
-    line-height: 1.8;
-    margin-bottom: 22px;
-    padding: 14px;
-    background: rgba(160, 108, 255, 0.1);
-    border-radius: 8px;
-    border-left: 3px solid var(--accent);
-  }
-
-  /* ===== SUCCESS POPUP ===== */
-  .success-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(7, 5, 15, 0.8);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.28s ease, visibility 0.28s ease;
-    z-index: 2000;
-  }
-
-  .success-overlay.show { opacity: 1; visibility: visible; }
-
-  .success-box {
-    position: relative;
-    background: linear-gradient(160deg, var(--card), var(--card-2));
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 32px 26px 26px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
-    transform: scale(0.7) translateY(18px);
-    opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.28s ease;
-    overflow: hidden;
-  }
-
-  .success-overlay.show .success-box {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-
-  .success-box::before,
-  .success-box::after {
-    content: '';
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    opacity: 0;
-  }
-
-  .success-overlay.show .success-box::before {
-    background: #ffd98a;
-    top: 20px;
-    left: 30px;
-    animation: confetti1 1.4s ease-out 0.3s;
-  }
-
-  .success-overlay.show .success-box::after {
-    background: var(--teal);
-    top: 30px;
-    right: 40px;
-    animation: confetti2 1.6s ease-out 0.4s;
-  }
-
-  @keyframes confetti1 {
-    0%   { opacity: 0; transform: translate(0,0) scale(0); }
-    40%  { opacity: 1; transform: translate(-10px,-15px) scale(1.2); }
-    100% { opacity: 0; transform: translate(-20px, 40px) scale(0.5); }
-  }
-
-  @keyframes confetti2 {
-    0%   { opacity: 0; transform: translate(0,0) scale(0); }
-    40%  { opacity: 1; transform: translate(10px,-10px) scale(1.3); }
-    100% { opacity: 0; transform: translate(20px, 50px) scale(0.4); }
-  }
-
-  .success-check {
-    width: 84px;
-    height: 84px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), #c08bff);
-    display: grid;
-    place-items: center;
-    margin: 0 auto 20px;
-    box-shadow: 0 10px 30px rgba(160, 108, 255, 0.35);
-    position: relative;
-    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
-  }
-
-  .success-check::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 3px solid #c08bff;
-    opacity: 0;
-  }
-
-  .success-overlay.show .success-check::before {
-    animation: pulseRing 1.6s ease-out 0.4s infinite;
-  }
-
-  @keyframes pulseRing {
-    0%   { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(1.6); opacity: 0; }
-  }
-
-  .success-check svg {
-    width: 44px;
-    height: 44px;
-    stroke: #fff;
-    stroke-width: 3.5;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .success-check svg path {
-    stroke-dasharray: 50;
-    stroke-dashoffset: 50;
-  }
-
-  .success-overlay.show .success-check svg path {
-    animation: drawCheck 0.55s ease-out 0.45s forwards;
-  }
-
-  @keyframes drawCheck {
-    to { stroke-dashoffset: 0; }
-  }
-
-  .success-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
-    animation: fadeUp 0.5s ease-out 0.5s both;
-  }
-
-  .success-text {
-    font-size: 14px;
-    color: var(--text-soft);
-    line-height: 1.7;
-    margin-bottom: 22px;
-    animation: fadeUp 0.5s ease-out 0.6s both;
-  }
-
-  .success-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeUp 0.5s ease-out 0.7s both;
-  }
-
-  .success-actions .btn { min-width: 130px; justify-content: center; }
-
-  .success-auto {
-    font-size: 11.5px;
-    color: var(--text-soft);
-    margin-top: 16px;
-    opacity: 0.75;
-    animation: fadeUp 0.5s ease-out 0.8s both;
-  }
-
-  /* ===== FOOTER ===== */
-  footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: var(--text-soft);
-    font-size: 12.5px;
-    border-top: 1px solid var(--border);
-    margin-top: 30px;
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 640px) {
-    .nav-inner { padding: 12px 16px; }
-    .nav-links a { padding: 6px 10px; font-size: 12.5px; }
-    .page { padding: 30px 16px 60px; }
-    .modal { padding: 22px 18px; }
-    .modal-photo { width: calc(100% + 36px); margin: -22px -18px 16px; height: 170px; }
-    .stat .num { font-size: 26px; }
-    .info-thumb { height: 140px; }
-    .form-card { padding: 22px 18px; }
-    .radio-group { grid-template-columns: 1fr; }
-    .success-box { padding: 28px 20px 22px; }
-    .success-check { width: 72px; height: 72px; }
-    .success-check svg { width: 36px; height: 36px; }
-    .success-title { font-size: 19px; }
-    .absurd-thumb { height: 150px; }
-    .chart-node { max-width: 100%; padding: 14px 16px; }
-    .chart-line { height: 22px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      font-weight:1000;
+      letter-spacing:-1.5px;
+      font-size:clamp(24px,4vw,34px);
     }
-  }
-</style>
+
+    .brand-badge{
+      width:40px;
+      height:40px;
+      border:var(--border);
+      background:var(--yellow);
+      display:grid;
+      place-items:center;
+      box-shadow:4px 4px 0 var(--ink);
+      transform:rotate(-4deg);
+    }
+
+    .status{
+      border:var(--border);
+      padding:9px 12px;
+      background:var(--green);
+      box-shadow:4px 4px 0 var(--ink);
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.4px;
+      white-space:nowrap;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.12fr .88fr;
+      gap:20px;
+      align-items:stretch;
+    }
+
+    .card{
+      background:var(--paper);
+      border:var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-copy{
+      padding:clamp(24px,5vw,54px);
+      position:relative;
+      overflow:hidden;
+      background:var(--yellow);
+      min-height:450px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .hero-copy:after{
+      content:"";
+      position:absolute;
+      width:140px;
+      height:140px;
+      border:var(--border);
+      right:-50px;
+      top:-45px;
+      background:var(--pink);
+      transform:rotate(17deg);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      gap:8px;
+      background:var(--ink);
+      color:#fff;
+      border:var(--border);
+      padding:8px 11px;
+      font-size:11px;
+      font-weight:1000;
+      letter-spacing:1.3px;
+      text-transform:uppercase;
+      box-shadow:4px 4px 0 var(--paper);
+      margin-bottom:22px;
+    }
+
+    h1{
+      margin:0;
+      max-width:680px;
+      font-size:clamp(42px,7.2vw,86px);
+      line-height:.88;
+      letter-spacing:-5px;
+      font-weight:1000;
+      text-transform:uppercase;
+    }
+
+    .hero-copy p{
+      margin:22px 0 0;
+      max-width:640px;
+      font-weight:800;
+      font-size:clamp(14px,1.8vw,18px);
+      line-height:1.45;
+    }
+
+    .mini-stack{
+      margin-top:25px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .tag{
+      border:var(--border);
+      background:var(--paper);
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      box-shadow:4px 4px 0 var(--ink);
+    }
+
+    .download-panel{
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      background:var(--paper);
+    }
+
+    .panel-title{
+      font-size:20px;
+      font-weight:1000;
+      letter-spacing:-.8px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field label{
+      font-size:12px;
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .input-wrap{
+      display:flex;
+      gap:8px;
+    }
+
+    input[type="url"]{
+      flex:1;
+      min-width:0;
+      border:var(--border);
+      background:#fff;
+      color:var(--ink);
+      padding:15px 14px;
+      border-radius:13px;
+      outline:none;
+      font-weight:750;
+      transition:transform .14s ease, box-shadow .14s ease, background .14s ease;
+    }
+
+    input[type="url"]:focus{
+      transform:translate(-2px,-2px);
+      box-shadow:5px 5px 0 var(--ink);
+      background:#fef8c9;
+    }
+
+    .btn{
+      border:var(--border);
+      color:var(--ink);
+      background:var(--cyan);
+      padding:14px 17px;
+      border-radius:13px;
+      cursor:pointer;
+      font-weight:1000;
+      box-shadow:5px 5px 0 var(--ink);
+      transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+      -webkit-tap-highlight-color:transparent;
+      user-select:none;
+    }
+
+    .btn:hover{filter:brightness(1.04)}
+    .btn:active,
+    .btn.is-pressed{
+      transform:translate(4px,4px);
+      box-shadow:1px 1px 0 var(--ink);
+    }
+
+    .btn.primary{
+      width:100%;
+      background:var(--purple);
+      padding:16px;
+      font-size:15px;
+    }
+
+    .btn.secondary{
+      background:var(--pink);
+      font-size:13px;
+    }
+
+    .btn.ghost{
+      background:#fff;
+      font-size:12px;
+      padding:10px 12px;
+    }
+
+    .helper{
+      margin:0;
+      color:#333;
+      font-size:12px;
+      line-height:1.45;
+      font-weight:700;
+    }
+
+    .loading{
+      display:none;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:var(--border);
+      background:var(--green);
+      font-size:12px;
+      font-weight:1000;
+    }
+
+    .loading.show{display:flex}
+
+    .loader{
+      width:17px;
+      height:17px;
+      border:3px solid var(--ink);
+      border-top-color:transparent;
+      border-radius:50%;
+      animation:spin .75s linear infinite;
+    }
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .result{
+      display:none;
+      margin-top:30px;
+      gap:20px;
+      grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+      align-items:start;
+    }
+
+    .result.show{display:grid}
+
+    .video-card{
+      padding:14px;
+      overflow:hidden;
+      background:var(--ink);
+    }
+
+    .video-shell{
+      position:relative;
+      overflow:hidden;
+      border:var(--border);
+      background:#000;
+      border-radius:12px;
+      aspect-ratio:16/9;
+    }
+
+    video{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:contain;
+      background:#000;
+    }
+
+    .video-overlay-label{
+      position:absolute;
+      left:10px;
+      top:10px;
+      z-index:2;
+      background:var(--yellow);
+      border:var(--border);
+      padding:6px 9px;
+      font-size:10px;
+      font-weight:1000;
+      box-shadow:3px 3px 0 #000;
+      pointer-events:none;
+    }
+
+    .details{
+      padding:19px;
+      background:var(--paper);
+    }
+
+    .thumb{
+      width:100%;
+      aspect-ratio:16/9;
+      object-fit:cover;
+      border:var(--border);
+      border-radius:12px;
+      display:block;
+      background:#ddd;
+      margin-bottom:15px;
+    }
+
+    .result-title{
+      margin:0 0 15px;
+      font-size:clamp(18px,2.5vw,27px);
+      line-height:1.08;
+      font-weight:1000;
+      letter-spacing:-1px;
+    }
+
+    .meta{
+      display:grid;
+      gap:9px;
+      margin-bottom:16px;
+    }
+
+    .meta-row{
+      border:var(--border);
+      padding:10px 11px;
+      background:#fff;
+      font-size:12px;
+      font-weight:850;
+      overflow-wrap:anywhere;
+    }
+
+    .action-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .note{
+      margin-top:12px;
+      border:var(--border);
+      background:var(--yellow);
+      padding:10px 11px;
+      font-size:11px;
+      line-height:1.45;
+      font-weight:850;
+    }
+
+    .history{
+      margin-top:30px;
+      padding:20px;
+    }
+
+    .history-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .history-head h2{
+      margin:0;
+      font-size:22px;
+      letter-spacing:-1px;
+    }
+
+    .history-list{
+      display:grid;
+      gap:9px;
+    }
+
+    .history-item{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:center;
+      gap:10px;
+      padding:11px 12px;
+      border:var(--border);
+      background:#fff;
+    }
+
+    .history-info{
+      min-width:0;
+    }
+
+    .history-title{
+      font-size:12px;
+      font-weight:950;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .history-url{
+      margin-top:3px;
+      font-size:10px;
+      opacity:.72;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .empty{
+      padding:15px;
+      border:var(--border);
+      background:#fff;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    footer{
+      margin-top:28px;
+      text-align:center;
+      font-size:11px;
+      font-weight:900;
+      opacity:.75;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translate(-50%,20px);
+      width:min(520px,calc(100% - 28px));
+      border:var(--border);
+      background:var(--ink);
+      color:#fff;
+      box-shadow:7px 7px 0 rgba(0,0,0,.22);
+      padding:12px 14px;
+      font-size:12px;
+      font-weight:900;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .16s ease, transform .16s ease;
+      z-index:99;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    .error{
+      display:none;
+      border:var(--border);
+      background:var(--red);
+      padding:12px;
+      font-size:12px;
+      font-weight:900;
+      line-height:1.45;
+    }
+
+    .error.show{display:block}
+
+    @media (max-width: 900px){
+      .hero,
+      .result{grid-template-columns:1fr}
+      .hero-copy{min-height:unset}
+      .result{margin-top:24px}
+    }
+
+    @media (max-width: 620px){
+      .page{width:min(100% - 16px,1180px);padding-top:12px}
+      .topbar{margin-bottom:16px}
+      .brand-badge{width:34px;height:34px}
+      .status{font-size:10px;padding:7px 9px}
+      .hero-copy{padding:24px 20px;box-shadow:6px 6px 0 var(--ink)}
+      h1{font-size:clamp(43px,14vw,70px);letter-spacing:-4px}
+      .input-wrap{flex-direction:column}
+      .btn.primary{padding:14px}
+      .download-panel,
+      .details,
+      .history{padding:14px}
+      .action-grid{grid-template-columns:1fr}
+      .card{border-width:3px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.001ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-<!-- ============ NAVBAR ============ -->
-<nav>
-  <div class="nav-inner">
-    <div class="logo"><span class="logo-dot"></span> Kelas XI-7</div>
-    <div class="nav-links">
-      <a href="#" data-page="home" class="active">Beranda</a>
-      <a href="#" data-page="struktur">Struktur</a>
-      <a href="#" data-page="info">Info</a>
-      <a href="#" data-page="absurd">Absurd</a>
-      <a href="#" data-page="report">Report</a>
-    </div>
-  </div>
-</nav>
-
-<!-- ============ PAGE 1 : BERANDA ============ -->
-<section class="page active" id="home">
-  <div class="page-head">
-    <span class="eyebrow reveal d1">Selamat Datang</span>
-    <h1 class="reveal d2">Kelas yang Solid,<br>Belajar Lebih Nyaman.</h1>
-    <p class="reveal d3">Website resmi kelas XI-7. Lihat struktur organisasi, jadwal, dan info penting di sini.</p>
-    <div class="btn-row reveal d4">
-      <button type="button" class="btn btn-primary" data-modal="welcome">
-        Jelajahi Kelas
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <button type="button" class="btn btn-ghost" data-page="struktur">Lihat Struktur</button>
-      <button type="button" class="btn btn-ghost" data-page="report">📩 Kirim Report</button>
-    </div>
-  </div>
-
-  <div class="grid grid-3" style="margin-top:44px;">
-    <div class="stat reveal d2"><div class="num">32</div><div class="lbl">Total Siswa</div></div>
-    <div class="stat reveal d3"><div class="num">6</div><div class="lbl">Mapel Utama</div></div>
-    <div class="stat reveal d4"><div class="num">2025</div><div class="lbl">Angkatan</div></div>
-  </div>
-
-  <div class="grid grid-3" style="margin-top:24px;">
-    <div class="card reveal d3">
-      <h3>🎯 Visi Kelas</h3>
-      <p>Menjadi kelas yang kompak, berprestasi, dan saling mendukung.</p>
-    </div>
-    <div class="card reveal d4">
-      <h3>💡 Misi Kelas</h3>
-      <p>Belajar disiplin, menghargai perbedaan, aktif berkegiatan.</p>
-    </div>
-    <div class="card reveal d5">
-      <h3>🤝 Nilai Kami</h3>
-      <p>Kekeluargaan, tanggung jawab, dan semangat berkembang.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PAGE 2 : STRUKTUR (BAGAN KOTAK) ============ -->
-<section class="page" id="struktur">
-  <div class="page-head">
-    <span class="eyebrow reveal d1">Organisasi</span>
-    <h1 class="reveal d2">Struktur Kelas</h1>
-    <p class="reveal d3">Bagan urut dari jabatan tertinggi. Klik kotak nama untuk melihat biodata.</p>
-  </div>
-
-  <div class="chart-wrap">
-
-    <div class="chart-node top reveal d1">
-      <div class="chart-num">01</div>
-      <div class="chart-info">
-        <h3>Wali Kelas</h3>
-        <p>Bu Rizky amelia, S.Pd. — Membimbing dan mengarahkan kelas.</p>
-      </div>
-    </div>
-
-    <div class="chart-line reveal d2"></div>
-
-    <div class="chart-node clickable reveal d2" onclick="showProfile('rizky')">
-      <div class="chart-num">02</div>
-      <div class="chart-info">
-        <h3>Ketua Kelas</h3>
-        <p>Muhammad Rafa Al Hasmi — Memimpin dan mengoordinasi kegiatan.</p>
-      </div>
-    </div>
-
-    <div class="chart-line reveal d3"></div>
-
-    <div class="chart-node clickable reveal d3" onclick="showProfile('nadia')">
-      <div class="chart-num">03</div>
-      <div class="chart-info">
-        <h3>Wakil Ketua</h3>
-        <p>A.Firman Jauzy — Membantu ketua saat berhalangan.</p>
-      </div>
-    </div>
-
-    <div class="chart-line reveal d4"></div>
-
-    <div class="chart-node clickable reveal d4" onclick="showProfile('dewi')">
-      <div class="chart-num">04</div>
-      <div class="chart-info">
-        <h3>Sekretaris</h3>
-        <p>Nur Ainun — Mengelola administrasi & notulen.</p>
-      </div>
-    </div>
-
-    <div class="chart-line reveal d5"></div>
-
-    <div class="chart-node clickable reveal d5" onclick="showProfile('fajar')">
-      <div class="chart-num">05</div>
-      <div class="chart-info">
-        <h3>Bendahara</h3>
-        <p>Nindi Aprilia - Mengatur uang kelas</p>
-      </div>
-    </div>
-
-  </div>
-
-  <h3 style="margin:36px 0 16px; font-size:18px;" class="reveal d3">Anggota Kelas</h3>
-  <div class="grid grid-3">
-    <div class="member reveal d2" onclick="showProfile('andi')">
-      <img class="avatar" src="https://i.pravatar.cc/150?img=12" alt="Foto Andi Saputra" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-      <div class="member-info"><h4>Andi Saputra</h4><span>Divisi Kebersihan</span></div>
-    </div>
-    <div class="member reveal d3" onclick="showProfile('bella')">
-      <img class="avatar" src="https://i.pravatar.cc/150?img=45" alt="Foto Bella Anggraini" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-      <div class="member-info"><h4>Bella Anggraini</h4><span>Divisi Acara</span></div>
-    </div>
-    <div class="member reveal d4" onclick="showProfile('candra')">
-      <img class="avatar" src="https://i.pravatar.cc/150?img=33" alt="Foto Candra Wijaya" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-      <div class="member-info"><h4>Candra Wijaya</h4><span>Divisi Olahraga</span></div>
-    </div>
-    <div class="member reveal d5" onclick="showProfile('dina')">
-      <img class="avatar" src="https://i.pravatar.cc/150?img=47" alt="Foto Dina Maulida" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-      <div class="member-info"><h4>Dina Maulida</h4><span>Divisi Dekorasi</span></div>
-    </div>
-    <div class="member reveal d6" onclick="showProfile('eko')">
-      <img class="avatar" src="https://i.pravatar.cc/150?img=15" alt="Foto Eko Prasetyo" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-      <div class="member-info"><h4>Eko Prasetyo</h4><span>Divisi Keamanan</span></div>
-    </div>
-    <div class="member reveal d6" onclick="showProfile('fitri')">
-      <img class="avatar" src="https://i.pravatar.cc/150?img=48" alt="Foto Fitri Handayani" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-      <div class="member-info"><h4>Fitri Handayani</h4><span>Divisi Sosial</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PAGE 3 : INFO ============ -->
-<section class="page" id="info">
-  <div class="page-head">
-    <span class="eyebrow reveal d1">Informasi</span>
-    <h1 class="reveal d2">Info & Jadwal</h1>
-    <p class="reveal d3">Jadwal pelajaran, aturan kelas, dan kontak penting.</p>
-  </div>
-
-  <div class="grid grid-2">
-
-    <div class="info-card reveal d2">
-      <img class="info-thumb" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80" alt="Ilustrasi jadwal pelajaran" loading="lazy" onerror="this.style.display='none'">
-      <div class="info-body">
-        <h3>📅 Jadwal Pelajaran</h3>
-        <ul class="info-list">
-          <li><strong>Senin</strong> — MM, BINDO, SB, KIM</li>
-<li><strong>Selasa</strong> — FIS, KKA, PP, BIG</li>
-<li><strong>Rabu</strong> — BINDO, PAIBP, TIK, EKO</li>
-<li><strong>Kamis</strong> — SJR IND, BIO, MM, PJS</li>
-<li><strong>Jumat</strong> — SOS, GEO</li>
-        </ul>
-        <div class="info-actions">
-          <button type="button" class="btn btn-ghost" data-modal="jadwal">Lihat Detail</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-card reveal d3">
-      <div class="info-thumb-empty">📌</div>
-      <div class="info-body">
-        <h3>Aturan Kelas</h3>
-        <ul class="info-list">
-          <li>Datang tepat waktu sebelum bel masuk berbunyi</li>
-          <li>Menjaga kebersihan dan kerapian kelas</li>
-          <li>Saling menghormati antar teman dan guru</li>
-          <li>Aktif dalam setiap kegiatan kelas</li>
-          <li>Tidak membawa barang terlarang ke sekolah</li>
-        </ul>
-        <div class="info-actions">
-          <button type="button" class="btn btn-ghost" data-modal="aturan">Baca Lengkap</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-card reveal d4">
-      <div class="info-thumb-empty">📞</div>
-      <div class="info-body">
-        <h3>Kontak Penting</h3>
-        <ul class="info-list">
-          <li><strong>Wali Kelas</strong> — 0812-xxxx-xxxx</li>
-          <li><strong>Ketua Kelas</strong> — 0813-xxxx-xxxx</li>
-          <li><strong>Wakil Ketua</strong> — 0814-xxxx-xxxx</li>
-          <li><strong>Sekretaris</strong> — 0815-xxxx-xxxx</li>
-        </ul>
-        <div class="info-actions">
-          <button type="button" class="btn btn-ghost" data-modal="kontak">Lihat Detail</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-card reveal d5">
-      <img class="info-thumb" src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=600&q=80" alt="Ilustrasi prestasi kelas" loading="lazy" onerror="this.style.display='none'">
-      <div class="info-body">
-        <h3>🏆 Prestasi Kelas</h3>
-        <ul class="info-list">
-          <li><strong>Juara 2</strong> — Lomba Kebersihan (2024)</li>
-          <li><strong>Juara 1</strong> — Futsal Antar Kelas (2025)</li>
-          <li><strong>Juara 3</strong> — Cerdas Cermat (2025)</li>
-        </ul>
-        <div class="info-actions">
-          <button type="button" class="btn btn-ghost" data-modal="prestasi">Lihat Prestasi</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ PAGE 5 : ABSURD ============ -->
-<section class="page" id="absurd">
-  <div class="page-head">
-    <span class="eyebrow reveal d1">Arsip Kejadian</span>
-    <h1 class="reveal d2">Hal-Hal Absurd<br>di Kelas Kami</h1>
-    <p class="reveal d3">Kumpulan momen random, aneh, dan tidak masuk akal yang pernah terjadi di XI-7. Dokumentasi resmi, tanpa rekayasa.</p>
-  </div>
-
-  <div class="absurd-grid">
-
-    <article class="absurd-card reveal d2">
-      <img class="absurd-thumb" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80" alt="Ilustrasi kursi kelas" loading="lazy" onerror="this.style.display='none'">
-      <div class="absurd-body">
-        <span class="absurd-tag">🏫 Kejadian</span>
-        <h3>Kursi yang Pindah Sendiri</h3>
-        <p>Suatu pagi, kursi di barisan paling belakang tiba-tiba berpindah ke depan pintu. Tidak ada yang mengaku. Sampai sekarang masih misteri, dan kursi itu dipercaya sebagai "kursi penjaga kelas".</p>
-        <div class="absurd-meta"><span class="dot"></span> Senin pagi, jam 06.45</div>
-      </div>
-    </article>
-
-    <article class="absurd-card reveal d3">
-      <img class="absurd-thumb" src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80" alt="Ilustrasi siswa belajar" loading="lazy" onerror="this.style.display='none'">
-      <div class="absurd-body">
-        <span class="absurd-tag">📚 Akademik</span>
-        <h3>Ulangan yang Jadi Debat Kusir</h3>
-        <p>Waktu ulangan Matematika, satu soal diperdebatkan selama 20 menit. Akhirnya guru mengalah dan soal itu dibatalkan. Nilai kelas naik drastis, tapi reputasi kelas di mata guru turun sedikit.</p>
-        <div class="absurd-meta"><span class="dot"></span> Rabu, jam pelajaran ketiga</div>
-      </div>
-    </article>
-
-    <article class="absurd-card reveal d4">
-      <img class="absurd-thumb" src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80" alt="Ilustrasi jam dinding" loading="lazy" onerror="this.style.display='none'">
-      <div class="absurd-body">
-        <span class="absurd-tag">⏰ Waktu</span>
-        <h3>Jam Dinding yang Selalu Terlambat 7 Menit</h3>
-        <p>Jam dinding kelas selalu terlambat 7 menit dari jam sebenarnya. Tidak ada yang memperbaiki, karena justru jadi alasan favorit: "Bu, jam kelas masih 07.00 kok!"</p>
-        <div class="absurd-meta"><span class="dot"></span> Setiap hari, sepanjang tahun</div>
-      </div>
-    </article>
-
-    <article class="absurd-card reveal d5">
-      <div class="absurd-thumb-empty">🍜</div>
-      <div class="absurd-body">
-        <span class="absurd-tag">🍔 Makanan</span>
-        <h3>Mie Instan di Dalam Laci</h3>
-        <p>Ada satu laci di kelas yang secara tidak resmi menjadi "dapur darurat". Isinya mie instan, sereal, dan kadang sambal. Tidak ada yang tahu siapa pemilik aslinya, tapi semua pernah makan dari situ.</p>
-        <div class="absurd-meta"><span class="dot"></span> Ditemukan saat piket Jumat</div>
-      </div>
-    </article>
-
-    <article class="absurd-card reveal d6">
-      <div class="absurd-thumb-empty">🪑</div>
-      <div class="absurd-body">
-        <span class="absurd-tag">🪑 Furnitur</span>
-        <h3>Kursi yang Hanya Bisa Diduduki Satu Orang</h3>
-        <p>Ada satu kursi yang sandarannya sudah longgar. Kalau diduduki dua orang, langsung ambruk. Kursi itu sekarang dijuluki "kursi kejujuran" — cuma yang berani jujur yang mau duduk di sana.</p>
-        <div class="absurd-meta"><span class="dot"></span> Sudah 3 kali diperbaiki, tetap sama</div>
-      </div>
-    </article>
-
-    <article class="absurd-card reveal d6">
-      <div class="absurd-thumb-empty">📢</div>
-      <div class="absurd-body">
-        <span class="absurd-tag">🔊 Suara</span>
-        <h3>Panggilan "Kelas XI-7" yang Tidak Pernah Selesai</h3>
-        <p>Setiap kali ada pengumuman lewat speaker, selalu terpotong di bagian "XI-IPA…". Sampai sekarang kelas kami dikenal sebagai "kelas yang namanya tidak pernah disebut selesai".</p>
-        <div class="absurd-meta"><span class="dot"></span> Terjadi minimal 2x seminggu</div>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- ============ PAGE 4 : REPORT / KOMPLAIN ============ -->
-<section class="page" id="report">
-  <div class="page-head">
-    <span class="eyebrow reveal d1">Report & Komplain</span>
-    <h1 class="reveal d2">Kirim Laporan</h1>
-    <p class="reveal d3">Sampaikan keluhan, saran, atau laporan masalah. Pesan akan langsung dikirim ke pengurus kelas.</p>
-  </div>
-
-  <div class="report-wrap">
-
-    <div class="form-card reveal d2">
-      <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
-
-      <form id="reportForm" novalidate>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="rName">Nama <span class="req">*</span>
-              <span class="form-hint">Nama kamu atau "Anonim"</span>
-            </label>
-            <input class="form-input" type="text" id="rName" name="name" maxlength="60" placeholder="Contoh: Rafa Al Hasmi" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="rClass">Kelas / Divisi
-              <span class="form-hint">Opsional</span>
-            </label>
-            <input class="form-input" type="text" id="rClass" name="kelas" maxlength="40" placeholder="Contoh: XI-7">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="rCategory">Kategori Laporan <span class="req">*</span></label>
-          <select class="form-select" id="rCategory" name="category" required>
-            <option value="">— Pilih kategori —</option>
-            <option value="🐛 Bug / Error Website">🐛 Bug / Error Website</option>
-            <option value="📚 Masalah Akademik">📚 Masalah Akademik</option>
-            <option value="👥 Masalah Sosial / Teman">👥 Masalah Sosial / Teman</option>
-            <option value="🧹 Kebersihan & Fasilitas">🧹 Kebersihan & Fasilitas</option>
-            <option value="💰 Keuangan / Kas Kelas">💰 Keuangan / Kas Kelas</option>
-            <option value="💡 Saran & Ide">💡 Saran & Ide</option>
-            <option value="📌 Lainnya">📌 Lainnya</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Tingkat Prioritas <span class="req">*</span></label>
-          <div class="radio-group">
-            <label class="radio-item">
-              <input type="radio" name="priority" value="🟢 Rendah" checked>
-              <span class="radio-box"><span class="emoji">🟢</span>Rendah</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" name="priority" value="🟡 Sedang">
-              <span class="radio-box"><span class="emoji">🟡</span>Sedang</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" name="priority" value="🔴 Tinggi">
-              <span class="radio-box"><span class="emoji">🔴</span>Tinggi</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="rMessage">Isi Laporan <span class="req">*</span>
-            <span class="form-hint">Minimal 10 karakter, maksimal 1000 karakter</span>
-          </label>
-          <textarea class="form-textarea" id="rMessage" name="message" maxlength="1000" placeholder="Jelaskan masalah atau saran kamu secara detail..." required></textarea>
-          <div class="char-counter" id="charCounter">0 / 1000</div>
-        </div>
-
-        <div class="btn-row" style="margin-top:8px;">
-          <button type="submit" class="btn btn-primary" id="submitBtn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            Kirim Laporan
-          </button>
-          <button type="reset" class="btn btn-ghost" id="resetBtn">Reset</button>
-        </div>
-      </form>
-    </div>
-
-    <div>
-      <div class="side-card reveal d3">
-        <span class="badge">📩 Cara Kerja</span>
-        <h4>Laporan Kamu Aman</h4>
-        <ol>
-          <li>Isi form dengan data yang jelas</li>
-          <li>Pesan langsung dikirim ke Telegram pengurus</li>
-          <li>Identitas bisa "Anonim" jika tidak nyaman</li>
-          <li>Laporan ditindaklanjuti maksimal 3 hari</li>
-        </ol>
-      </div>
-
-      <div class="side-card reveal d4">
-        <span class="badge">⏱️ Waktu Respon</span>
-        <h4>Estimasi Tindak Lanjut</h4>
-        <ul>
-          <li><strong>🔴 Tinggi</strong> — &lt; 24 jam</li>
-          <li><strong>🟡 Sedang</strong> — 1–3 hari</li>
-          <li><strong>🟢 Rendah</strong> — 3–7 hari</li>
-        </ul>
-      </div>
-
-      <div class="side-card reveal d5">
-        <span class="badge">⚠️ Perhatian</span>
-        <h4>Mohon Diperhatikan</h4>
-        <p>Jangan kirim laporan palsu atau spam. Semua pesan tercatat dan bisa dilacak oleh pengurus kelas.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ MODAL INFO ============ -->
-<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-label="Dialog informasi">
-  <div class="modal" id="modal-content"></div>
-</div>
-
-<!-- ============ POPUP WELCOME (OTOMATIS) ============ -->
-<div class="modal-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-  <div class="modal welcome-box">
-    <div class="welcome-icon">✨</div>
-    <h3 id="welcomeTitle">Selamat Datang di Kelas XI-7</h3>
-    <p>Website resmi kelas kami. Jelajahi struktur, jadwal, dan kejadian absurd di kelas. Jangan lupa follow Instagram kelas untuk update terbaru!</p>
-    <div class="welcome-actions">
-      <a class="btn btn-ig" href="https://instagram.com/xiipa2.official" target="_blank" rel="noopener noreferrer">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-        </svg>
-        Follow Instagram Kelas
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="LUTLOAD Home">
+        <span class="brand-badge">N</span>
+        <span>LUTLOAD</span>
       </a>
-      <button type="button" class="btn btn-ghost" onclick="closeWelcome()">Masuk ke Website</button>
-    </div>
-  </div>
-</div>
+      <div class="status">●  LutLoad READY</div>
+    </header>
 
-<!-- ============ POPUP SUKSES ============ -->
-<div class="success-overlay" id="successOverlay" role="dialog" aria-modal="true" aria-labelledby="successTitle">
-  <div class="success-box">
-    <div class="success-check">
-      <svg viewBox="0 0 52 52" aria-hidden="true">
-        <path d="M14 27 L23 36 L38 18" />
-      </svg>
-    </div>
-    <h3 class="success-title" id="successTitle">Laporan Terkirim! 🎉</h3>
-    <p class="success-text">
-      Terima kasih sudah melapor. Pesanmu sudah masuk ke Telegram pengurus kelas dan akan segera ditindaklanjuti.
-    </p>
-    <div class="success-actions">
-      <button type="button" class="btn btn-primary" onclick="closeSuccess()">Selesai</button>
-      <button type="button" class="btn btn-ghost" onclick="closeSuccess(true)">Kirim Lagi</button>
-    </div>
-    <p class="success-auto" id="successAuto">Pop-up akan tertutup otomatis dalam 8 detik…</p>
-  </div>
-</div>
-
-<footer>© 2025 Kelas XI-7 — Dibuat dengan ❤️ untuk kebersamaan.</footer>
-
-<script>
-  /* =========================================================
-     KONFIGURASI TELEGRAM BOT
-     ========================================================= */
-  const TELEGRAM_BOT_TOKEN = '8296313075:AAFnE3LHHa3V_NXP6IwJLkhqsnSgNxyTEPQ';
-  const TELEGRAM_CHAT_ID   = '8074273430';
-
-  /* =========================================================
-     CEK APAKAH HALAMAN DIBUKA VIA FILE://
-     ========================================================= */
-  const IS_FILE_PROTOCOL = window.location.protocol === 'file:';
-  const HAS_FETCH = typeof fetch === 'function';
-
-  if (IS_FILE_PROTOCOL) {
-    console.warn(
-      '[Kelas XI-7] Halaman dibuka via file:// — ' +
-      'pengiriman ke Telegram TIDAK akan berfungsi. ' +
-      'Silakan host halaman ini di web server (GitHub Pages, Netlify, dsb).'
-    );
-  }
-
-  /* ===== DATA SISWA ===== */
-  const students = {
-    rizky: {
-      name: 'M. Rafa Al Hasymi', role: 'Ketua Kelas',
-      photo: 'https://i.pravatar.cc/300?img=11',
-      bio: 'Suka memimpin dan mengoordinasi kegiatan. Aktif di OSIS dan gemar berorganisasi sejak SMP.',
-      data: { 'NIS': '2025001', 'Kelas': 'XI-7', 'TTL': 'Jakarta, 12 Mar 2008', 'Hobi': 'Basket, Membaca' }
-    },
-    nadia: {
-      name: 'A, Firman Jauzy', role: 'Wakil Ketua',
-      photo: 'https://i.pravatar.cc/300?img=44',
-      bio: 'Ceria dan mudah bergaul. Selalu siap membantu teman yang kesulitan.',
-      data: { 'NIS': '2025002', 'Kelas': 'XI-7', 'TTL': 'Bandung, 5 Jul 2008', 'Hobi': 'Menari, Musik' }
-    },
-    dewi: {
-      name: 'Safira bulla mata', role: 'Sekretaris',
-      photo: 'https://i.pravatar.cc/300?img=46',
-      bio: 'Teliti dan rapi. Bertanggung jawab atas semua catatan dan administrasi kelas.',
-      data: { 'NIS': '2025003', 'Kelas': 'XI-7', 'TTL': 'Surabaya, 18 Nov 2008', 'Hobi': 'Menulis, Melukis' }
-    },
-    fajar: {
-      name: 'Nindi Aprilia', role: 'Bendahara',
-      photo: 'https://i.pravatar.cc/300?img=13',
-      bio: 'Disiplin soal keuangan. Selalu mencatat pemasukan dan pengeluaran kas kelas dengan rapi.',
-      data: { 'NIS': '2025004', 'Kelas': 'XI-7', 'TTL': 'Yogyakarta, 3 Feb 2008', 'Hobi': 'Coding, nyoli' }
-    },
-    andi: {
-      name: 'Andi Saputra', role: 'Divisi Kebersihan',
-      photo: 'https://i.pravatar.cc/300?img=12',
-      bio: 'Pecinta kebersihan. Selalu memastikan kelas dalam keadaan rapi sebelum pulang.',
-      data: { 'NIS': '2025005', 'Kelas': 'XI-7', 'TTL': 'Medan, 20 Apr 2008', 'Hobi': 'Futsal, Gaming' }
-    },
-    bella: {
-      name: 'Bella Anggraini', role: 'Divisi Acara',
-      photo: 'https://i.pravatar.cc/300?img=45',
-      bio: 'Kreatif dan penuh ide. Biasa menjadi otak di balik acara-acara kelas.',
-      data: { 'NIS': '2025006', 'Kelas': 'XI-7', 'TTL': 'Semarang, 9 Sep 2008', 'Hobi': 'Desain, Fotografi' }
-    },
-    candra: {
-      name: 'Candra Wijaya', role: 'Divisi Olahraga',
-      photo: 'https://i.pravatar.cc/300?img=33',
-      bio: 'Atlet futsal kelas. Aktif mengajak teman-teman untuk hidup sehat.',
-      data: { 'NIS': '2025007', 'Kelas': 'XI-7', 'TTL': 'Palembang, 14 Jan 2008', 'Hobi': 'Futsal, Lari' }
-    },
-    dina: {
-      name: 'Dina Maulida', role: 'Divisi Dekorasi',
-      photo: 'https://i.pravatar.cc/300?img=47',
-      bio: 'Punya selera estetika tinggi. Selalu mempercantik kelas dengan dekorasi simple.',
-      data: { 'NIS': '2025008', 'Kelas': 'XI-7', 'TTL': 'Malang, 25 Jun 2008', 'Hobi': 'DIY, Membaca' }
-    },
-    eko: {
-      name: 'Eko Prasetyo', role: 'Divisi Keamanan',
-      photo: 'https://i.pravatar.cc/300?img=15',
-      bio: 'Sigap dan bertanggung jawab. Mengawasi ketertiban kelas setiap hari.',
-      data: { 'NIS': '2025009', 'Kelas': 'XI-7', 'TTL': 'Bogor, 8 Agt 2008', 'Hobi': 'Beladiri, Panahan' }
-    },
-    fitri: {
-      name: 'Fitri Handayani', role: 'Divisi Sosial',
-      photo: 'https://i.pravatar.cc/300?img=48',
-      bio: 'Ramah dan peduli sesama. Aktif dalam kegiatan sosial dan bakti kelas.',
-      data: { 'NIS': '2025010', 'Kelas': 'XI-7', 'TTL': 'Denpasar, 2 Des 2008', 'Hobi': 'Relawan, Traveling' }
-    }
-  };
-
-  /* ===== DATA JADWAL ===== */
-  const jadwalData = {
-    photo: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80',
-    title: '📅 Jadwal Pelajaran',
-    days: [
-      { day: 'Senin',  subjects: 'Matematika, Fisika', time: '07.00 – 14.30 WIB' },
-      { day: 'Selasa', subjects: 'Biologi, Kimia', time: '07.00 – 14.30 WIB' },
-      { day: 'Rabu',   subjects: 'B. Indonesia, B. Inggris', time: '07.00 – 14.30 WIB' },
-      { day: 'Kamis',  subjects: 'Sejarah, PKN', time: '07.00 – 14.30 WIB' },
-      { day: 'Jumat',  subjects: 'Olahraga, Seni Budaya', time: '07.00 – 11.30 WIB' }
-    ]
-  };
-
-  /* ===== DATA PRESTASI ===== */
-  const prestasiData = {
-    photo: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=800&q=80',
-    title: '🏆 Prestasi Kelas',
-    items: [
-      { medal: '🥈 Juara 2', title: 'Lomba Kebersihan Antar Kelas', year: '2024',
-        photo: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200&q=80' },
-      { medal: '🥇 Juara 1', title: 'Turnamen Futsal Antar Kelas', year: '2025',
-        photo: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=200&q=80' },
-      { medal: '🥉 Juara 3', title: 'Lomba Cerdas Cermat', year: '2025',
-        photo: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=200&q=80' }
-    ]
-  };
-
-  /* ===== NAVIGASI ===== */
-  const pages = document.querySelectorAll('.page');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const navButtons = document.querySelectorAll('[data-page]');
-
-  function goTo(pageId) {
-    pages.forEach(p => p.classList.toggle('active', p.id === pageId));
-    navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      goTo(link.dataset.page);
-    });
-  });
-
-  navButtons.forEach(btn => {
-    btn.addEventListener('click', () => goTo(btn.dataset.page));
-  });
-
-  /* ===== MODAL SYSTEM ===== */
-  const modal = document.getElementById('modal');
-  const modalContent = document.getElementById('modal-content');
-
-  const infoModals = {
-    welcome: {
-      icon: '👋', title: 'Halo, Selamat Datang!',
-      text: 'Ini website resmi kelas XI-7. Jelajahi struktur kelas, jadwal, dan info penting lainnya melalui menu di atas.'
-    },
-    aturan: {
-      icon: '📌', title: 'Aturan Kelas',
-      text: '1) Datang tepat waktu sebelum bel masuk.\n\n2) Menjaga kebersihan dan kerapian kelas.\n\n3) Saling menghormati antar teman dan guru.\n\n4) Aktif dalam setiap kegiatan kelas.\n\n5) Tidak membawa barang terlarang ke sekolah.'
-    },
-    kontak: {
-      icon: '📞', title: 'Kontak Penting',
-      text: 'Wali Kelas: 0812-xxxx-xxxx\n\nKetua Kelas: 0813-xxxx-xxxx\n\nWakil Ketua: 0814-xxxx-xxxx\n\nSekretaris: 0815-xxxx-xxxx'
-    }
-  };
-
-  function openModal(html) {
-    modalContent.innerHTML = html;
-    modal.classList.add('show');
-  }
-
-  window.closeModal = function() {
-    modal.classList.remove('show');
-  };
-
-  document.querySelectorAll('[data-modal]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const key = btn.dataset.modal;
-
-      if (key === 'jadwal') {
-        const items = jadwalData.days.map(d => `
-          <div class="sched-item">
-            <div class="day">${d.day}</div>
-            <div class="subjects">${d.subjects}</div>
-            <div class="time">${d.time}</div>
-          </div>
-        `).join('');
-
-        openModal(`
-          <img class="modal-photo" src="${jadwalData.photo}" alt="Ilustrasi jadwal" onerror="this.style.display='none'">
-          <h3>${jadwalData.title}</h3>
-          <div class="sched-list">${items}</div>
-          <button type="button" class="btn btn-primary" onclick="closeModal()">Tutup</button>
-        `);
-        return;
-      }
-
-      if (key === 'prestasi') {
-        const items = prestasiData.items.map(p => `
-          <div class="achieve-item">
-            <img src="${p.photo}" alt="${p.title}" loading="lazy" onerror="this.style.visibility='hidden'">
-            <div class="info">
-              <span class="medal">${p.medal}</span>
-              <h4>${p.title}</h4>
-              <p>Tahun ${p.year}</p>
-            </div>
-          </div>
-        `).join('');
-
-        openModal(`
-          <img class="modal-photo" src="${prestasiData.photo}" alt="Ilustrasi prestasi" onerror="this.style.display='none'">
-          <h3>${prestasiData.title}</h3>
-          <div class="achieve-list">${items}</div>
-          <button type="button" class="btn btn-primary" onclick="closeModal()">Tutup</button>
-        `);
-        return;
-      }
-
-      const data = infoModals[key];
-      if (!data) return;
-      openModal(`
-        <div class="modal-icon">${data.icon}</div>
-        <h3>${data.title}</h3>
-        <p style="white-space: pre-line;">${data.text}</p>
-        <button type="button" class="btn btn-primary" onclick="closeModal()">Mengerti</button>
-      `);
-    });
-  });
-
-  /* Modal profil siswa */
-  window.showProfile = function(key) {
-    const s = students[key];
-    if (!s) return;
-
-    const rows = Object.entries(s.data).map(([label, value]) => `
-      <div class="profile-item">
-        <span class="label">${label}</span>
-        <span class="value">${value}</span>
-      </div>
-    `).join('');
-
-    openModal(`
-      <div class="profile-head">
-        <img class="profile-photo" src="${s.photo}" alt="Foto ${s.name}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-        <div>
-          <h3>${s.name}</h3>
-          <div class="role">${s.role}</div>
+    <section class="hero">
+      <div class="card hero-copy">
+        <div class="eyebrow">LutLoad · VID DOWNLOADER</div>
+        <h1>Unduh.<br>Putar.<br>Simpan.</h1>
+        <p>Downloader video bertemakan neobrutalisme, video player langsung, dan alur yang simpel.</p>
+        <div class="mini-stack">
+          <span class="tag">TikTok</span>
+          <span class="tag">AIO</span>
+          <span class="tag">MP4</span>
+          <span class="tag">No Login</span>
+          <span class="tag">Free 100%</span>
         </div>
       </div>
-      <div class="profile-list">${rows}</div>
-      <div class="profile-bio">${s.bio}</div>
-      <button type="button" class="btn btn-primary" onclick="closeModal()">Tutup</button>
-    `);
-  };
 
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+      <div class="card download-panel">
+        <div class="panel-title">Masukkan link video</div>
 
-  /* ===== WELCOME POPUP ===== */
-  const welcomeOverlay = document.getElementById('welcomeOverlay');
+        <div class="field">
+          <label for="urlInput">Video URL</label>
+          <div class="input-wrap">
+            <input id="urlInput" type="url" inputmode="url" autocomplete="off"
+              placeholder="https://vt.tiktok.com/..." aria-label="URL video" />
+            <button class="btn ghost" id="pasteBtn" type="button">PASTE</button>
+          </div>
+        </div>
 
-  function openWelcome() {
-    welcomeOverlay.classList.add('show');
-  }
+        <button class="btn primary" id="downloadBtn" type="button"> PROSES VIDEO</button>
 
-  window.closeWelcome = function() {
-    welcomeOverlay.classList.remove('show');
-    try { sessionStorage.setItem('welcomeShown', '1'); } catch (e) {}
-  };
+        <div class="loading" id="loading">
+          <span class="loader"></span>
+          <span id="loadingText">Memproses video...</span>
+        </div>
 
-  welcomeOverlay.addEventListener('click', e => {
-    if (e.target === welcomeOverlay) closeWelcome();
-  });
+        <div class="error" id="errorBox"></div>
 
-  // Tampilkan otomatis saat halaman dibuka
-  document.addEventListener('DOMContentLoaded', () => {
-    let shown = false;
-    try { shown = sessionStorage.getItem('welcomeShown') === '1'; } catch (e) {}
-    if (!shown) {
-      // delay sedikit agar smooth, tidak nabrak animasi lain
-      setTimeout(openWelcome, 400);
-    }
-  });
+        <p class="helper">
+          Masukkan URL Dan Tunggu Hasil video.
+        </p>
+      </div>
+    </section>
 
-  /* ===== SUCCESS POPUP ===== */
-  const successOverlay = document.getElementById('successOverlay');
-  const successAuto = document.getElementById('successAuto');
-  let successTimer = null;
-  let successInterval = null;
+    <section class="result" id="resultSection">
+      <div class="card video-card">
+        <div class="video-shell">
+          <div class="video-overlay-label">VIDEO PREVIEW</div>
+          <video id="videoPlayer" controls playsinline preload="metadata"></video>
+        </div>
+      </div>
 
-  function showSuccess() {
-    successOverlay.classList.add('show');
+      <div class="card details">
+        <img id="thumb" class="thumb" alt="Thumbnail video" loading="lazy" />
 
-    let remain = 8;
-    successAuto.textContent = `Pop-up akan tertutup otomatis dalam ${remain} detik…`;
+        <h2 id="resultTitle" class="result-title">Video result</h2>
 
-    clearInterval(successInterval);
-    successInterval = setInterval(() => {
-      remain--;
-      if (remain > 0) {
-        successAuto.textContent = `Pop-up akan tertutup otomatis dalam ${remain} detik…`;
-      } else {
-        clearInterval(successInterval);
-      }
-    }, 1000);
+        <div class="meta">
+          <div class="meta-row" id="creatorMeta">CREATOR: Faa</div>
+          <div class="meta-row" id="sourceMeta">SOURCE: AIO</div>
+        </div>
 
-    clearTimeout(successTimer);
-    successTimer = setTimeout(() => closeSuccess(), 8000);
-  }
+        <div class="action-grid">
+  <button class="btn secondary" id="saveBtn" type="button">⬇ SIMPAN VIDEO</button>
+</div>
+       
+        <div class="note">
+          Catatan: sebagian server/CDN dapat membatasi download langsung dari browser. Tombol simpan akan mencoba metode blob terlebih dahulu lalu memakai link langsung sebagai fallback.
+        </div>
+      </div>
+    </section>
 
-  window.closeSuccess = function(keepForm) {
-    successOverlay.classList.remove('show');
-    clearTimeout(successTimer);
-    clearInterval(successInterval);
+    <section class="card history" id="historySection">
+      <div class="history-head">
+        <h2>Riwayat lokal</h2>
+        <button class="btn ghost" id="clearHistoryBtn" type="button">HAPUS</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty">Belum ada riwayat di perangkat ini.</div>
+      </div>
+    </section>
 
-    if (keepForm) {
-      setTimeout(() => document.getElementById('rName').focus(), 300);
-    }
-  };
+    <footer>LUTLOAD · Powerd by LUTECH-COMMUNITY</footer>
+  </main>
 
-  successOverlay.addEventListener('click', e => {
-    if (e.target === successOverlay) closeSuccess();
-  });
+  <div class="toast" id="toast"></div>
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      if (welcomeOverlay.classList.contains('show')) {
-        closeWelcome();
-      } else if (successOverlay.classList.contains('show')) {
-        closeSuccess();
-      } else {
-        closeModal();
-      }
-    }
-  });
+  <script>
+    const API_BASE = "https://api-faa.my.id/faa/aio?url=";
 
-  /* =========================================================
-     FORM REPORT → TELEGRAM
-     ========================================================= */
-  const reportForm = document.getElementById('reportForm');
-  const formStatus = document.getElementById('formStatus');
-  const submitBtn  = document.getElementById('submitBtn');
-  const resetBtn   = document.getElementById('resetBtn');
-  const msgField   = document.getElementById('rMessage');
-  const charCount  = document.getElementById('charCounter');
+    const $ = (id) => document.getElementById(id);
+    const urlInput = $("urlInput");
+    const processBtn = $("downloadBtn");
+    const pasteBtn = $("pasteBtn");
+    const loading = $("loading");
+    const loadingText = $("loadingText");
+    const errorBox = $("errorBox");
+    const resultSection = $("resultSection");
+    const videoPlayer = $("videoPlayer");
+    const thumb = $("thumb");
+    const resultTitle = $("resultTitle");
+    const creatorMeta = $("creatorMeta");
+    const sourceMeta = $("sourceMeta");
+    const saveBtn = $("saveBtn");
+    const copyBtn = $("copyBtn");
+    const toast = $("toast");
+    const historyList = $("historyList");
+    const clearHistoryBtn = $("clearHistoryBtn");
 
-  let lastSentAt = 0;
-  const COOLDOWN_MS = 30 * 1000;
+    let currentVideoUrl = "";
+    let currentInputUrl = "";
 
-  msgField.addEventListener('input', () => {
-    const len = msgField.value.length;
-    charCount.textContent = `${len} / 1000`;
-    charCount.classList.toggle('warn',   len > 800 && len <= 950);
-    charCount.classList.toggle('danger', len > 950);
-  });
-
-  function showStatus(type, title, message) {
-    formStatus.className = 'form-status show ' + type;
-    formStatus.innerHTML = `<strong>${title}</strong>${message}`;
-  }
-
-  function hideStatus() {
-    formStatus.className = 'form-status';
-    formStatus.innerHTML = '';
-  }
-
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  function escapeTelegramHtml(text) {
-    return String(text)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
-  function fetchWithTimeout(url, options = {}, timeoutMs = 15000) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-    return fetch(url, { ...options, signal: controller.signal })
-      .finally(() => clearTimeout(timer));
-  }
-
-  async function sendToTelegram(payload) {
-    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-      throw new Error('Token bot atau Chat ID belum diisi di dalam kode.');
+    function pressEffect(button){
+      button.classList.add("is-pressed");
+      window.setTimeout(() => button.classList.remove("is-pressed"), 150);
     }
 
-    if (!HAS_FETCH) {
-      throw new Error('Browser kamu tidak mendukung fetch API. Gunakan browser modern.');
-    }
-
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
-    let res;
-    try {
-      res = await fetchWithTimeout(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }, 15000);
-    } catch (err) {
-      if (err.name === 'AbortError') {
-        throw new Error('Timeout — server Telegram tidak merespon dalam 15 detik.');
-      }
-      if (IS_FILE_PROTOCOL) {
-        throw new Error(
-          'Halaman ini dibuka dari file lokal (file://). ' +
-          'Browser memblokir request ke Telegram karena alasan keamanan (CORS). ' +
-          'Solusi: upload halaman ini ke GitHub Pages / Netlify / Vercel, lalu buka via https://.'
-        );
-      }
-      throw new Error(`Gagal menghubungi server. Cek koneksi internet. (${err.message})`);
-    }
-
-    let data;
-    try {
-      data = await res.json();
-    } catch (e) {
-      throw new Error(`Response tidak valid (HTTP ${res.status}).`);
-    }
-
-    if (!res.ok || !data.ok) {
-      const desc = data.description || `HTTP ${res.status}`;
-      let friendly = desc;
-      if (desc.includes('chat not found')) friendly = 'Chat ID salah, atau kamu belum pernah chat bot ini. Buka bot → klik /start.';
-      if (desc.includes('Unauthorized')) friendly = 'Token bot salah / sudah di-revoke. Cek @BotFather.';
-      if (desc.includes('bot was blocked')) friendly = 'Bot diblokir oleh user. Buka bot → unblock.';
-      if (desc.includes("can't parse entities")) friendly = 'Format pesan bermasalah. Hubungi admin.';
-      throw new Error(`${friendly} (${desc})`);
-    }
-    return data;
-  }
-
-  reportForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    hideStatus();
-
-    const name     = document.getElementById('rName').value.trim() || 'Anonim';
-    const kelas    = document.getElementById('rClass').value.trim() || '-';
-    const category = document.getElementById('rCategory').value;
-    const priority = (document.querySelector('input[name="priority"]:checked') || {}).value || '🟢 Rendah';
-    const message  = msgField.value.trim();
-
-    if (!category) {
-      showStatus('error', '❌ Kategori belum dipilih', 'Silakan pilih kategori laporan terlebih dahulu.');
-      document.getElementById('rCategory').focus();
-      return;
-    }
-    if (message.length < 10) {
-      showStatus('error', '❌ Pesan terlalu pendek', 'Isi laporan minimal 10 karakter agar jelas.');
-      msgField.focus();
-      return;
-    }
-
-    const now = Date.now();
-    const sisa = Math.ceil((COOLDOWN_MS - (now - lastSentAt)) / 1000);
-    if (now - lastSentAt < COOLDOWN_MS) {
-      showStatus('warn', '⏳ Tunggu sebentar', `Kamu baru saja mengirim laporan. Coba lagi dalam ${sisa} detik.`);
-      return;
-    }
-
-    const waktu = new Date().toLocaleString('id-ID', {
-      timeZone: 'Asia/Jakarta',
-      day: '2-digit', month: 'long', year: 'numeric',
-      hour: '2-digit', minute: '2-digit'
+    document.querySelectorAll(".btn").forEach((btn) => {
+      btn.addEventListener("pointerdown", () => pressEffect(btn));
     });
 
-    const text =
-      `📩 <b>LAPORAN BARU — Kelas XI-7</b>\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `👤 <b>Nama</b>     : ${escapeTelegramHtml(name)}\n` +
-      `🏫 <b>Kelas</b>    : ${escapeTelegramHtml(kelas)}\n` +
-      `📂 <b>Kategori</b> : ${escapeTelegramHtml(category)}\n` +
-      `⚡ <b>Prioritas</b>: ${escapeTelegramHtml(priority)}\n` +
-      `🕐 <b>Waktu</b>    : ${escapeTelegramHtml(waktu)}\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `📝 <b>Isi Laporan:</b>\n${escapeTelegramHtml(message)}`;
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
 
-    submitBtn.disabled = true;
-    const originalHTML = submitBtn.innerHTML;
-    submitBtn.innerHTML = `<span class="spinner"></span> Mengirim...`;
-    showStatus('info', '📤 Mengirim laporan...', 'Mohon tunggu sebentar.');
+    function showError(message){
+      errorBox.textContent = message;
+      errorBox.classList.add("show");
+    }
+
+    function clearError(){
+      errorBox.textContent = "";
+      errorBox.classList.remove("show");
+    }
+
+    function setLoading(active, text = "Memproses..."){
+      loading.classList.toggle("show", active);
+      loadingText.textContent = text;
+      processBtn.disabled = active;
+      processBtn.style.opacity = active ? ".65" : "1";
+      processBtn.style.cursor = active ? "wait" : "pointer";
+    }
+
+    function validUrl(value){
+      try{
+        const u = new URL(value);
+        return ["http:", "https:"].includes(u.protocol);
+      }catch{
+        return false;
+      }
+    }
+
+    function escapeText(value){
+      return String(value ?? "").trim();
+    }
+
+    function saveHistory(item){
+      const key = "neoload_history_v1";
+      let history = [];
+      try{
+        history = JSON.parse(localStorage.getItem(key) || "[]");
+      }catch{
+        history = [];
+      }
+
+      history = [
+        { title:item.title, input:item.input, video:item.video, time:Date.now() },
+        ...history.filter(x => x.input !== item.input)
+      ].slice(0, 8);
+
+      localStorage.setItem(key, JSON.stringify(history));
+      renderHistory();
+    }
+
+    function loadHistory(){
+      try{
+        return JSON.parse(localStorage.getItem("neoload_history_v1") || "[]");
+      }catch{
+        return [];
+      }
+    }
+
+    function renderHistory(){
+      const history = loadHistory();
+      if(!history.length){
+        historyList.innerHTML = '<div class="empty">Belum ada riwayat di perangkat ini.</div>';
+        return;
+      }
+
+      historyList.innerHTML = history.map((item, index) => `
+        <div class="history-item">
+          <div class="history-info">
+            <div class="history-title">${escapeHtml(item.title || "Video")}</div>
+            <div class="history-url">${escapeHtml(item.input || "")}</div>
+          </div>
+          <button class="btn ghost history-open" data-index="${index}" type="button">BUKA</button>
+        </div>
+      `).join("");
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function openHistory(index){
+      const item = loadHistory()[index];
+      if(!item) return;
+      if(!item.video){
+        showToast("Link video riwayat sudah tidak tersedia.");
+        return;
+      }
+
+      currentInputUrl = item.input || "";
+      currentVideoUrl = item.video;
+      urlInput.value = currentInputUrl;
+
+      resultTitle.textContent = item.title || "Video result";
+      videoPlayer.src = currentVideoUrl;
+      resultSection.classList.add("show");
+      resultSection.scrollIntoView({behavior:"smooth", block:"start"});
+      showToast("Preview dibuka dari riwayat.");
+    }
+
+    historyList.addEventListener("click", (e) => {
+      const btn = e.target.closest(".history-open");
+      if(!btn) return;
+      openHistory(Number(btn.dataset.index));
+    });
+
+    clearHistoryBtn.addEventListener("click", () => {
+      localStorage.removeItem("neoload_history_v1");
+      renderHistory();
+      showToast("Riwayat dihapus.");
+    });
+
+    pasteBtn.addEventListener("click", async () => {
+      pressEffect(pasteBtn);
+      try{
+        const text = await navigator.clipboard.readText();
+        if(text){
+          urlInput.value = text.trim();
+          urlInput.focus();
+          showToast("URL ditempel.");
+        }else{
+          showToast("Clipboard kosong.");
+        }
+      }catch{
+        urlInput.focus();
+        showToast("Browser menolak akses clipboard. Tempel manual.");
+      }
+    });
+
+    urlInput.addEventListener("keydown", (e) => {
+      if(e.key === "Enter") processVideo();
+    });
+
+    processBtn.addEventListener("click", processVideo);
+
+    async function processVideo(){
+      clearError();
+      const inputUrl = urlInput.value.trim();
+
+      if(!inputUrl){
+        showError("Masukkan URL video terlebih dahulu.");
+        urlInput.focus();
+        return;
+      }
+
+      if(!validUrl(inputUrl)){
+        showError("URL tidak valid. Contoh: https://vt.tiktok.com/...");
+        urlInput.focus();
+        return;
+      }
+
+      currentInputUrl = inputUrl;
+      resultSection.classList.remove("show");
+      videoPlayer.pause();
+      videoPlayer.removeAttribute("src");
+      videoPlayer.load();
+
+      setLoading(true, "Melakukan Proses...");
+      await delay(180);
+
+      try{
+        const apiUrl = API_BASE + encodeURIComponent(inputUrl);
+        const response = await fetch(apiUrl, {
+          method:"GET",
+          headers:{ "Accept":"application/json" },
+          cache:"no-store"
+        });
+
+        if(!response.ok){
+          throw new Error("API mengembalikan HTTP " + response.status);
+        }
+
+        setLoading(true, "Membaca hasil video...");
+        await delay(180);
+
+        const data = await response.json();
+
+        if(!data || data.status !== true){
+          throw new Error("API tidak mengembalikan hasil yang valid.");
+        }
+
+        const first = Array.isArray(data.result) ? data.result[0] : data.result;
+
+        if(!first || !first.url){
+          throw new Error("URL video tidak ditemukan pada response API.");
+        }
+
+        currentVideoUrl = first.url;
+
+        resultTitle.textContent = escapeText(first.title) || "Video result";
+        creatorMeta.textContent = "CREATOR: " + (escapeText(data.creator) || "Faa");
+        sourceMeta.textContent = "SOURCE: " + (data.input?.url ? "AIO · TikTok" : "AIO");
+
+        thumb.src = first.thumb || "";
+        thumb.style.display = first.thumb ? "block" : "none";
+
+        videoPlayer.src = first.url;
+        videoPlayer.poster = first.thumb || "";
+        videoPlayer.load();
+
+        resultSection.classList.add("show");
+        saveHistory({
+          title:first.title || "Video",
+          input:inputUrl,
+          video:first.url
+        });
+
+        await delay(120);
+        resultSection.scrollIntoView({behavior:"smooth", block:"start"});
+        showToast("Video siap diputar.");
+      }catch(error){
+        console.error(error);
+        showError(
+          "Gagal mengambil video. " +
+          (error?.message ? error.message + " " : "") +
+          "Periksa URL atau coba lagi."
+        );
+      }finally{
+        setLoading(false);
+      }
+    }
+
+    saveBtn.addEventListener("click", async () => {
+      if(!currentVideoUrl){
+        showToast("Belum ada video.");
+        return;
+      }
+
+      pressEffect(saveBtn);
+      saveBtn.disabled = true;
+      saveBtn.textContent = "⏳ MENYIAPKAN...";
+
+      try{
+        const response = await fetch(currentVideoUrl, {
+          method:"GET",
+          mode:"cors",
+          cache:"no-store"
+        });
+
+        if(!response.ok) throw new Error("download blocked");
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = makeFilename(resultTitle.textContent || "video") + ".mp4";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+        showToast("Download dimulai.");
+      }catch{
+        const a = document.createElement("a");
+        a.href = currentVideoUrl;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showToast("CDN membatasi blob, link video dibuka.");
+      }finally{
+        setTimeout(() => {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "⬇ SIMPAN VIDEO";
+        }, 250);
+      }
+    });
+
+    
+      if (copyBtn) {
+  copyBtn.addEventListener("click", async () => {
+    pressEffect(copyBtn);
+
+    if (!currentVideoUrl) {
+      showToast("Belum ada link video.");
+      return;
+    }
 
     try {
-      await sendToTelegram({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: text,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true
-      });
-
-      lastSentAt = Date.now();
-      reportForm.reset();
-      charCount.textContent = '0 / 1000';
-      charCount.classList.remove('warn', 'danger');
-      hideStatus();
-      showSuccess();
-
-    } catch (err) {
-      showStatus('error', '❌ Gagal mengirim laporan', escapeHtml(err.message));
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalHTML;
+      await navigator.clipboard.writeText(currentVideoUrl);
+      showToast("Link video disalin.");
+    } catch {
+      showToast("Gagal menyalin link.");
     }
   });
+}
+    function makeFilename(text){
+      return text
+        .replace(/[<>:"/\\|?*\u0000-\u001F]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 70) || "neoload-video";
+    }
 
-  resetBtn.addEventListener('click', () => {
-    hideStatus();
-    charCount.textContent = '0 / 1000';
-    charCount.classList.remove('warn', 'danger');
-  });
-</script>
+    function delay(ms){
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Example URL dari user, hanya sebagai placeholder awal.
+    urlInput.value = "";
+
+    renderHistory();
+  </script>
 </body>
 </html>
