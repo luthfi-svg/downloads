@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f4f0e6" />
   <meta name="color-scheme" content="light" />
   <title>LUTLOAD — Video Downloader</title>
- <link rel="icon" type="image/png" href="https://files.catbox.moe/xkbayt.jpg">
+  <link rel="icon" type="image/png" href="https://files.catbox.moe/xkbayt.jpg">
   <meta name="description" content="Web Tools Download VIDEO FREE 100%" />
   <meta name="google-site-verification" content="IDHivFGhUaDXTTmOlFoeqIzvMheaGYmZsDZKW7R2mCg" />
 
@@ -614,10 +614,11 @@
         </div>
 
         <div class="action-grid">
-  <button class="btn secondary" id="saveBtn" type="button">⬇ SIMPAN VIDEO</button>
-</div>
-         
+          <button class="btn secondary" id="saveBtn" type="button">⬇ SIMPAN VIDEO</button>
+        </div>
+      </div>
     </section>
+
     <section class="card history" id="historySection">
       <div class="history-head">
         <h2>Riwayat lokal</h2>
@@ -650,7 +651,6 @@
     const creatorMeta = $("creatorMeta");
     const sourceMeta = $("sourceMeta");
     const saveBtn = $("saveBtn");
-    const copyBtn = $("copyBtn");
     const toast = $("toast");
     const historyList = $("historyList");
     const clearHistoryBtn = $("clearHistoryBtn");
@@ -899,6 +899,41 @@
       }
     }
 
+    /* ============================================================
+       FIX: Tombol Simpan — Unduh file, bukan redirect ke URL
+       ============================================================ */
+    async function fetchAsBlob(videoUrl){
+      // Coba beberapa strategi berurutan untuk mendapatkan blob
+      const attempts = [
+        // 1. Langsung (kalau CDN mengizinkan CORS)
+        { url: videoUrl, label: "direct" },
+        // 2. Lewat proxy corsproxy.io
+        { url: "https://corsproxy.io/?" + encodeURIComponent(videoUrl), label: "corsproxy" },
+        // 3. Lewat proxy allorigins
+        { url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(videoUrl), label: "allorigins" },
+      ];
+
+      let lastError = null;
+      for(const attempt of attempts){
+        try{
+          const res = await fetch(attempt.url, {
+            method:"GET",
+            mode:"cors",
+            cache:"no-store",
+            redirect:"follow"
+          });
+          if(!res.ok) throw new Error("HTTP " + res.status);
+          const blob = await res.blob();
+          if(blob.size < 1024) throw new Error("Blob terlalu kecil (" + blob.size + " bytes)");
+          return blob;
+        }catch(err){
+          lastError = err;
+          console.warn("[download] gagal via " + attempt.label + ":", err.message);
+        }
+      }
+      throw lastError || new Error("Semua metode download gagal");
+    }
+
     saveBtn.addEventListener("click", async () => {
       if(!currentVideoUrl){
         showToast("Belum ada video.");
@@ -906,65 +941,54 @@
       }
 
       pressEffect(saveBtn);
+      const originalText = saveBtn.textContent;
       saveBtn.disabled = true;
-      saveBtn.textContent = "⏳ MENYIAPKAN...";
+      saveBtn.textContent = "⏳ MENGUNDUH...";
 
       try{
-        const response = await fetch(currentVideoUrl, {
-          method:"GET",
-          mode:"cors",
-          cache:"no-store"
-        });
-
-        if(!response.ok) throw new Error("download blocked");
-
-        const blob = await response.blob();
+        // Strategi utama: ambil sebagai blob lalu download
+        const blob = await fetchAsBlob(currentVideoUrl);
         const blobUrl = URL.createObjectURL(blob);
 
         const a = document.createElement("a");
         a.href = blobUrl;
         a.download = makeFilename(resultTitle.textContent || "video") + ".mp4";
+        a.style.display = "none";
         document.body.appendChild(a);
         a.click();
         a.remove();
 
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
         showToast("Download dimulai.");
-      }catch{
-        const a = document.createElement("a");
-        a.href = currentVideoUrl;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        showToast("CDN membatasi blob, link video dibuka.");
+      }catch(err){
+        console.warn("Blob download gagal, fallback ke download link langsung:", err);
+
+        // Fallback terakhir: pakai atribut download pada <a>.
+        // Browser akan mengunduh, bukan navigasi (untuk same-origin atau
+        // server yang mengirim Content-Disposition: attachment).
+        // Kalau tetap tidak bisa, buka di tab baru dengan pesan agar user
+        // klik kanan → Save Video.
+        try{
+          const a = document.createElement("a");
+          a.href = currentVideoUrl;
+          a.download = makeFilename(resultTitle.textContent || "video") + ".mp4";
+          a.rel = "noopener noreferrer";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          showToast("Mencoba unduh langsung. Jika gagal, klik kanan pada video → Simpan video.");
+        }catch(e){
+          showToast("Gagal mengunduh. Coba klik kanan pada video → Simpan video.");
+        }
       }finally{
         setTimeout(() => {
           saveBtn.disabled = false;
-          saveBtn.textContent = "⬇ SIMPAN VIDEO";
-        }, 250);
+          saveBtn.textContent = originalText || "⬇ SIMPAN VIDEO";
+        }, 400);
       }
     });
 
-    
-      if (copyBtn) {
-  copyBtn.addEventListener("click", async () => {
-    pressEffect(copyBtn);
-
-    if (!currentVideoUrl) {
-      showToast("Belum ada link video.");
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(currentVideoUrl);
-      showToast("Link video disalin.");
-    } catch {
-      showToast("Gagal menyalin link.");
-    }
-  });
-}
     function makeFilename(text){
       return text
         .replace(/[<>:"/\\|?*\u0000-\u001F]/g, "")
@@ -977,7 +1001,6 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // Example URL dari user, hanya sebagai placeholder awal.
     urlInput.value = "";
 
     renderHistory();
