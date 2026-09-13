@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#f4f0e6" />
   <meta name="color-scheme" content="light" />
-  <title>LUTLOAD — Video Downloader</title>
+  <title>LUTLOAD — Media Downloader</title>
   <link rel="icon" type="image/png" href="https://files.catbox.moe/xkbayt.jpg">
-  <meta name="description" content="Web Tools Download VIDEO FREE 100%" />
+  <meta name="description" content="Web Tools Download VIDEO & FOTO FREE 100%" />
   <meta name="google-site-verification" content="IDHivFGhUaDXTTmOlFoeqIzvMheaGYmZsDZKW7R2mCg" />
 
   <style>
@@ -263,6 +263,14 @@
       font-size:13px;
     }
 
+    .btn.save{
+      width:100%;
+      background:var(--green);
+      padding:15px;
+      font-size:14px;
+      margin-top:6px;
+    }
+
     .btn.ghost{
       background:#fff;
       font-size:12px;
@@ -334,6 +342,14 @@
       background:#000;
     }
 
+    #imagePreview{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:contain;
+      background:#000;
+    }
+
     .video-overlay-label{
       position:absolute;
       left:10px;
@@ -387,22 +403,6 @@
       overflow-wrap:anywhere;
     }
 
-    .action-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .note{
-      margin-top:12px;
-      border:var(--border);
-      background:var(--yellow);
-      padding:10px 11px;
-      font-size:11px;
-      line-height:1.45;
-      font-weight:850;
-    }
-
     .history{
       margin-top:30px;
       padding:20px;
@@ -437,9 +437,7 @@
       background:#fff;
     }
 
-    .history-info{
-      min-width:0;
-    }
+    .history-info{min-width:0;}
 
     .history-title{
       font-size:12px;
@@ -529,7 +527,6 @@
       .download-panel,
       .details,
       .history{padding:14px}
-      .action-grid{grid-template-columns:1fr}
       .card{border-width:3px}
     }
 
@@ -556,41 +553,43 @@
 
     <section class="hero">
       <div class="card hero-copy">
-        <div class="eyebrow">LutLoad · VID DOWNLOADER</div>
+        <div class="eyebrow">LutLoad · MEDIA DOWNLOADER</div>
         <h1>Unduh.<br>Putar.<br>Simpan.</h1>
-        <p>Downloader video bertemakan neobrutalisme, video player langsung, dan alur yang simpel.</p>
+        <p>Downloader video & foto bertemakan neobrutalisme, preview langsung, dan alur yang simpel.</p>
         <div class="mini-stack">
           <span class="tag">TikTok</span>
-          <span class="tag">AIO</span>
-          <span class="tag">MP4</span>
+          <span class="tag">Instagram</span>
+          <span class="tag">facebook</span>
+          <span class="tag">All In One</span>
+          <span class="tag">MP4 / JPG</span>
           <span class="tag">No Login</span>
-          <span class="tag">Free 100%</span>
+          <span class="tag">Free</span>
         </div>
       </div>
 
       <div class="card download-panel">
-        <div class="panel-title">Masukkan link video</div>
+        <div class="panel-title">Masukkan link media</div>
 
         <div class="field">
-          <label for="urlInput">Video URL</label>
+          <label for="urlInput">Media URL</label>
           <div class="input-wrap">
             <input id="urlInput" type="url" inputmode="url" autocomplete="off"
-              placeholder="Masukkan URL Video Yang Ingin Di Download" aria-label="URL video" />
+              placeholder="Masukkan URL Video / Foto" aria-label="URL media" />
             <button class="btn ghost" id="pasteBtn" type="button">PASTE</button>
           </div>
         </div>
 
-        <button class="btn primary" id="downloadBtn" type="button"> PROSES VIDEO</button>
+        <button class="btn primary" id="downloadBtn" type="button"> PROSES MEDIA</button>
 
         <div class="loading" id="loading">
           <span class="loader"></span>
-          <span id="loadingText">Memproses video...</span>
+          <span id="loadingText">Memproses...</span>
         </div>
 
         <div class="error" id="errorBox"></div>
 
         <p class="helper">
-          Masukkan URL Dan Tunggu Hasil video.
+          Masukkan URL Dan Tunggu Hasilnya.
         </p>
       </div>
     </section>
@@ -598,24 +597,24 @@
     <section class="result" id="resultSection">
       <div class="card video-card">
         <div class="video-shell">
-          <div class="video-overlay-label">VIDEO PREVIEW</div>
+          <div class="video-overlay-label" id="previewLabel">PREVIEW</div>
           <video id="videoPlayer" controls playsinline preload="metadata"></video>
+          <img id="imagePreview" alt="Preview gambar" style="display:none" />
         </div>
       </div>
 
       <div class="card details">
-        <img id="thumb" class="thumb" alt="Thumbnail video" loading="lazy" />
+        <img id="thumb" class="thumb" alt="Thumbnail media" loading="lazy" />
 
-        <h2 id="resultTitle" class="result-title">Video result</h2>
+        <h2 id="resultTitle" class="result-title">Media result</h2>
 
         <div class="meta">
-          <div class="meta-row" id="creatorMeta">CREATOR: Luthfi</div>
+          <div class="meta-row" id="creatorMeta">CREATOR: LUTPI</div>
           <div class="meta-row" id="sourceMeta">SOURCE: AIO</div>
+          <div class="meta-row" id="typeMeta">TYPE: -</div>
         </div>
 
-        <div class="note">
-          Klik kanan pada video lalu pilih <strong>Simpan video</strong> untuk mengunduh ke perangkat.
-        </div>
+        <button class="btn save" id="saveBtn" type="button">⬇ SIMPAN KE PERANGKAT</button>
       </div>
     </section>
 
@@ -636,6 +635,7 @@
 
   <script>
     const API_BASE = "https://api-faa.my.id/faa/aio?url=";
+    const CREATOR_NAME = "LUTPI";
 
     const $ = (id) => document.getElementById(id);
     const urlInput = $("urlInput");
@@ -646,16 +646,25 @@
     const errorBox = $("errorBox");
     const resultSection = $("resultSection");
     const videoPlayer = $("videoPlayer");
+    const imagePreview = $("imagePreview");
+    const previewLabel = $("previewLabel");
     const thumb = $("thumb");
     const resultTitle = $("resultTitle");
     const creatorMeta = $("creatorMeta");
     const sourceMeta = $("sourceMeta");
+    const typeMeta = $("typeMeta");
+    const saveBtn = $("saveBtn");
     const toast = $("toast");
     const historyList = $("historyList");
     const clearHistoryBtn = $("clearHistoryBtn");
 
-    let currentVideoUrl = "";
+    let currentMediaUrl = "";
     let currentInputUrl = "";
+    let currentMediaType = "video";
+    let currentFileExt = "mp4";
+
+    // Creator selalu LUTPI
+    creatorMeta.textContent = "CREATOR: " + CREATOR_NAME;
 
     function pressEffect(button){
       button.classList.add("is-pressed");
@@ -670,7 +679,7 @@
       toast.textContent = message;
       toast.classList.add("show");
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+      window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
     }
 
     function showError(message){
@@ -704,17 +713,39 @@
       return String(value ?? "").trim();
     }
 
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function detectMediaType(url, hintType){
+      const u = String(url || "").toLowerCase().split("?")[0];
+      if(hintType === "image" || hintType === "photo") return "image";
+      if(hintType === "video") return "video";
+      if(/\.(jpg|jpeg|png|webp|gif|bmp|avif)$/.test(u)) return "image";
+      if(/\.(mp4|webm|mov|m4v|mkv)$/.test(u)) return "video";
+      return "video";
+    }
+
+    function extFromUrl(url, type){
+      const u = String(url || "").toLowerCase().split("?")[0];
+      const m = u.match(/\.([a-z0-9]{2,5})$/);
+      if(m) return m[1];
+      return type === "image" ? "jpg" : "mp4";
+    }
+
     function saveHistory(item){
-      const key = "neoload_history_v1";
+      const key = "neoload_history_v2";
       let history = [];
-      try{
-        history = JSON.parse(localStorage.getItem(key) || "[]");
-      }catch{
-        history = [];
-      }
+      try{ history = JSON.parse(localStorage.getItem(key) || "[]"); }
+      catch{ history = []; }
 
       history = [
-        { title:item.title, input:item.input, video:item.video, time:Date.now() },
+        { title:item.title, input:item.input, media:item.media, type:item.type, time:Date.now() },
         ...history.filter(x => x.input !== item.input)
       ].slice(0, 8);
 
@@ -723,11 +754,8 @@
     }
 
     function loadHistory(){
-      try{
-        return JSON.parse(localStorage.getItem("neoload_history_v1") || "[]");
-      }catch{
-        return [];
-      }
+      try{ return JSON.parse(localStorage.getItem("neoload_history_v2") || "[]"); }
+      catch{ return []; }
     }
 
     function renderHistory(){
@@ -740,7 +768,7 @@
       historyList.innerHTML = history.map((item, index) => `
         <div class="history-item">
           <div class="history-info">
-            <div class="history-title">${escapeHtml(item.title || "Video")}</div>
+            <div class="history-title">${escapeHtml(item.title || "Media")}</div>
             <div class="history-url">${escapeHtml(item.input || "")}</div>
           </div>
           <button class="btn ghost history-open" data-index="${index}" type="button">BUKA</button>
@@ -748,29 +776,25 @@
       `).join("");
     }
 
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
     function openHistory(index){
       const item = loadHistory()[index];
       if(!item) return;
-      if(!item.video){
-        showToast("Link video riwayat sudah tidak tersedia.");
+      if(!item.media){
+        showToast("Link media riwayat sudah tidak tersedia.");
         return;
       }
 
       currentInputUrl = item.input || "";
-      currentVideoUrl = item.video;
+      currentMediaUrl = item.media;
+      currentMediaType = item.type || "video";
+      currentFileExt = extFromUrl(currentMediaUrl, currentMediaType);
       urlInput.value = currentInputUrl;
 
-      resultTitle.textContent = item.title || "Video result";
-      videoPlayer.src = currentVideoUrl;
+      resultTitle.textContent = item.title || "Media result";
+      creatorMeta.textContent = "CREATOR: " + CREATOR_NAME;
+      typeMeta.textContent = "TYPE: " + (currentMediaType === "image" ? "FOTO" : "VIDEO");
+
+      showPreview(currentMediaUrl, currentMediaType);
       resultSection.classList.add("show");
       resultSection.scrollIntoView({behavior:"smooth", block:"start"});
       showToast("Preview dibuka dari riwayat.");
@@ -783,7 +807,7 @@
     });
 
     clearHistoryBtn.addEventListener("click", () => {
-      localStorage.removeItem("neoload_history_v1");
+      localStorage.removeItem("neoload_history_v2");
       renderHistory();
       showToast("Riwayat dihapus.");
     });
@@ -806,23 +830,44 @@
     });
 
     urlInput.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") processVideo();
+      if(e.key === "Enter") processMedia();
     });
 
-    processBtn.addEventListener("click", processVideo);
+    processBtn.addEventListener("click", processMedia);
 
-    async function processVideo(){
+    function showPreview(url, type){
+      if(type === "image"){
+        videoPlayer.pause();
+        videoPlayer.removeAttribute("src");
+        videoPlayer.load();
+        videoPlayer.style.display = "none";
+
+        imagePreview.src = url;
+        imagePreview.style.display = "block";
+        previewLabel.textContent = "FOTO PREVIEW";
+      }else{
+        imagePreview.removeAttribute("src");
+        imagePreview.style.display = "none";
+
+        videoPlayer.src = url;
+        videoPlayer.style.display = "block";
+        videoPlayer.load();
+        previewLabel.textContent = "VIDEO PREVIEW";
+      }
+    }
+
+    async function processMedia(){
       clearError();
       const inputUrl = urlInput.value.trim();
 
       if(!inputUrl){
-        showError("Masukkan URL video terlebih dahulu.");
+        showError("Masukkan URL terlebih dahulu.");
         urlInput.focus();
         return;
       }
 
       if(!validUrl(inputUrl)){
-        showError("URL tidak valid. Contoh: https://vt.tiktok.com/...");
+        showError("URL tidak valid. Contoh: https://www.instagram.com/p/...");
         urlInput.focus();
         return;
       }
@@ -832,6 +877,7 @@
       videoPlayer.pause();
       videoPlayer.removeAttribute("src");
       videoPlayer.load();
+      imagePreview.removeAttribute("src");
 
       setLoading(true, "Melakukan Proses...");
       await delay(180);
@@ -848,7 +894,7 @@
           throw new Error("API mengembalikan HTTP " + response.status);
         }
 
-        setLoading(true, "Membaca hasil video...");
+        setLoading(true, "Membaca hasil...");
         await delay(180);
 
         const data = await response.json();
@@ -860,36 +906,40 @@
         const first = Array.isArray(data.result) ? data.result[0] : data.result;
 
         if(!first || !first.url){
-          throw new Error("URL video tidak ditemukan pada response API.");
+          throw new Error("URL media tidak ditemukan pada response API.");
         }
 
-        currentVideoUrl = first.url;
+        const hintType = first.type || first.media_type || data.type || "";
+        currentMediaType = detectMediaType(first.url, hintType);
+        currentFileExt = extFromUrl(first.url, currentMediaType);
+        currentMediaUrl = first.url;
 
-        resultTitle.textContent = escapeText(first.title) || "Video result";
-        creatorMeta.textContent = "CREATOR: " + (escapeText(data.creator) || "Faa");
-        sourceMeta.textContent = "SOURCE: " + (data.input?.url ? "AIO · TikTok" : "AIO");
+        resultTitle.textContent = escapeText(first.title) || "Media result";
+        // Creator selalu LUTPI
+        creatorMeta.textContent = "CREATOR: " + CREATOR_NAME;
+        sourceMeta.textContent = "SOURCE: " + (data.input?.url ? "AIO · " + (data.input.host || "Media") : "AIO");
+        typeMeta.textContent = "TYPE: " + (currentMediaType === "image" ? "FOTO" : "VIDEO");
 
-        thumb.src = first.thumb || "";
-        thumb.style.display = first.thumb ? "block" : "none";
+        thumb.src = first.thumb || first.url || "";
+        thumb.style.display = (first.thumb || first.url) ? "block" : "none";
 
-        videoPlayer.src = first.url;
-        videoPlayer.poster = first.thumb || "";
-        videoPlayer.load();
+        showPreview(currentMediaUrl, currentMediaType);
 
         resultSection.classList.add("show");
         saveHistory({
-          title:first.title || "Video",
-          input:inputUrl,
-          video:first.url
+          title: first.title || "Media",
+          input: inputUrl,
+          media: currentMediaUrl,
+          type: currentMediaType
         });
 
         await delay(120);
         resultSection.scrollIntoView({behavior:"smooth", block:"start"});
-        showToast("Video siap diputar.");
+        showToast(currentMediaType === "image" ? "Foto siap diunduh." : "Video siap diputar.");
       }catch(error){
         console.error(error);
         showError(
-          "Gagal mengambil video. " +
+          "Gagal mengambil media. " +
           (error?.message ? error.message + " " : "") +
           "Periksa URL atau coba lagi."
         );
@@ -898,12 +948,106 @@
       }
     }
 
+    async function fetchAsBlob(mediaUrl){
+      const attempts = [
+        { url: mediaUrl, label: "direct" },
+        { url: "https://corsproxy.io/?" + encodeURIComponent(mediaUrl), label: "corsproxy" },
+        { url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(mediaUrl), label: "allorigins" },
+      ];
+
+      let lastError = null;
+      for(const attempt of attempts){
+        try{
+          const res = await fetch(attempt.url, {
+            method:"GET",
+            mode:"cors",
+            cache:"no-store",
+            redirect:"follow"
+          });
+          if(!res.ok) throw new Error("HTTP " + res.status);
+          const blob = await res.blob();
+          if(blob.size < 512) throw new Error("Blob terlalu kecil (" + blob.size + " bytes)");
+          return blob;
+        }catch(err){
+          lastError = err;
+          console.warn("[download] gagal via " + attempt.label + ":", err.message);
+        }
+      }
+      throw lastError || new Error("Semua metode download gagal");
+    }
+
+    saveBtn.addEventListener("click", async () => {
+      if(!currentMediaUrl){
+        showToast("Belum ada media.");
+        return;
+      }
+
+      pressEffect(saveBtn);
+      const originalText = saveBtn.textContent;
+      saveBtn.disabled = true;
+      saveBtn.textContent = "⏳ MENGUNDUH...";
+
+      const filename = makeFilename(resultTitle.textContent || "media") + "." + currentFileExt;
+
+      try{
+        const blob = await fetchAsBlob(currentMediaUrl);
+        const blobUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = filename;
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+        showToast("Download dimulai.");
+      }catch(err){
+        console.warn("Blob download gagal, fallback ke link langsung:", err);
+
+        try{
+          const a = document.createElement("a");
+          a.href = currentMediaUrl;
+          a.download = filename;
+          a.rel = "noopener noreferrer";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          showToast(
+            currentMediaType === "image"
+              ? "Mencoba unduh foto. Jika gagal, klik kanan gambar → Simpan gambar."
+              : "Mencoba unduh video. Jika gagal, klik kanan video → Simpan video."
+          );
+        }catch(e){
+          showToast(
+            currentMediaType === "image"
+              ? "Gagal mengunduh. Klik kanan gambar → Simpan gambar."
+              : "Gagal mengunduh. Klik kanan video → Simpan video."
+          );
+        }
+      }finally{
+        setTimeout(() => {
+          saveBtn.disabled = false;
+          saveBtn.textContent = originalText || "⬇ SIMPAN KE PERANGKAT";
+        }, 400);
+      }
+    });
+
+    function makeFilename(text){
+      return text
+        .replace(/[<>:"/\\|?*\u0000-\u001F]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 70) || "neoload-media";
+    }
+
     function delay(ms){
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     urlInput.value = "";
-
     renderHistory();
   </script>
 </body>
